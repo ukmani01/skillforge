@@ -1,0 +1,263 @@
+/* ============================================================
+   SkillForge — Marketing / Home
+   Reuses tokens from base.css.
+   ============================================================ */
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero{
+  padding:56px 0 64px;
+  background:var(--surface);
+  border-bottom:1px solid var(--border);
+}
+.hero-grid{
+  display:grid;
+  grid-template-columns:1.15fr .85fr;
+  gap:56px;
+  align-items:center;
+}
+.hero-copy{display:flex;flex-direction:column;gap:18px;max-width:560px}
+.hero-copy>*{animation:homeRise .55s both}
+.hero-copy>*:nth-child(2){animation-delay:.06s}.hero-copy>*:nth-child(3){animation-delay:.12s}.hero-copy>*:nth-child(4){animation-delay:.18s}.hero-copy>*:nth-child(5){animation-delay:.24s}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:.76rem;font-weight:700;color:var(--accent);
+  background:var(--accent-bg);
+  padding:5px 14px;border-radius:var(--radius-full);width:fit-content;
+}
+.hero-title{
+  font-size:clamp(1.9rem,4.4vw,2.75rem);
+  font-weight:800;letter-spacing:-0.03em;line-height:1.14;
+  color:var(--ink-900);
+}
+.hero-description{
+  font-size:1rem;color:var(--text-secondary);line-height:1.7;max-width:480px;
+}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:4px}
+.hero-actions .btn{min-width:150px}
+.hero-stats{
+  display:flex;gap:28px;margin-top:8px;padding-top:20px;
+  border-top:1px solid var(--border-light);flex-wrap:wrap;
+}
+.hero-stat .value{font-size:1.4rem;font-weight:800;letter-spacing:-0.01em}
+.hero-stat .label{font-size:.74rem;color:var(--text-muted)}
+
+/* Hero visual: abstract product mockup, CSS-only */
+.hero-visual{position:relative}
+.hero-visual__card{animation:homeFloat .7s .12s both}
+.hero-visual__card{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);
+  box-shadow:var(--shadow-lg);padding:0;overflow:hidden;
+}
+.hero-visual__bar{
+  display:flex;align-items:center;gap:6px;padding:12px 16px;
+  border-bottom:1px solid var(--border-light);background:var(--surface-alt);
+}
+.hero-visual__dot{width:8px;height:8px;border-radius:50%;background:var(--border)}
+.hero-visual__body{padding:20px}
+.hero-visual__q{font-size:.82rem;font-weight:700;color:var(--text-primary);margin-bottom:12px}
+.hero-visual__opt{
+  display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:var(--radius-sm);
+  border:1.5px solid var(--border);margin-bottom:8px;font-size:.8rem;color:var(--text-secondary);
+}
+.hero-visual__opt .letter{
+  width:20px;height:20px;border-radius:6px;background:var(--surface-sunken);
+  display:flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:800;color:var(--text-muted);flex:none;
+}
+.hero-visual__opt.is-correct{border-color:var(--success);background:var(--success-bg)}
+.hero-visual__opt.is-correct .letter{background:var(--success);color:#fff}
+.hero-visual__foot{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 20px;border-top:1px solid var(--border-light);background:var(--surface-alt);
+}
+.hero-visual__badge{position:absolute;bottom:-14px;left:-14px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:12px 16px;display:flex;align-items:center;gap:10px}
+.hero-visual__ring{width:34px;height:34px;border-radius:50%;background:conic-gradient(var(--primary) 82%, var(--surface-sunken) 0);display:flex;align-items:center;justify-content:center;flex:none}
+.hero-visual__ring span{width:24px;height:24px;border-radius:50%;background:var(--surface);display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:800;color:var(--primary)}
+
+/* ============================================================
+   SECTION WRAPPERS
+   ============================================================ */
+.section{padding:56px 0}
+.section-alt{background:var(--surface)}
+.section-header{max-width:600px;margin-bottom:32px}
+.section-header.centered{margin-left:auto;margin-right:auto;text-align:center}
+.section-kicker{
+  display:block;font-size:.8rem;font-weight:700;color:var(--primary);margin-bottom:8px;
+}
+.section-title{font-size:clamp(1.4rem,3vw,1.9rem);font-weight:800;letter-spacing:-0.02em;margin-bottom:8px;color:var(--ink-900)}
+.section-subtitle{font-size:.92rem;color:var(--text-secondary);max-width:560px}
+
+/* legacy alias kept so any code still referencing .section-label renders sensibly */
+.section-label{display:block;font-size:.8rem;font-weight:700;color:var(--primary);margin-bottom:8px}
+
+/* ============================================================
+   LEARNING PATHS / TRACKS
+   ============================================================ */
+.track-grid{display:grid;grid-template-columns:1fr;gap:16px}
+@media(min-width:720px){.track-grid{grid-template-columns:1fr 1fr}}
+.track-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);
+  padding:24px;display:flex;flex-direction:column;gap:14px;transition:border-color var(--transition),box-shadow var(--transition);
+}
+.track-card:hover{border-color:var(--ink-300);box-shadow:var(--shadow)}
+.track-card__top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.track-card__icon{
+  width:44px;height:44px;border-radius:12px;background:var(--primary-light);color:var(--primary);
+  display:flex;align-items:center;justify-content:center;flex:none;
+}
+.track-card__icon svg{width:22px;height:22px}
+.track-card h3{font-size:1.05rem;margin-bottom:4px}
+.track-card p{font-size:.87rem;color:var(--text-secondary);line-height:1.6}
+.track-card__meta{display:flex;gap:16px;flex-wrap:wrap;font-size:.78rem;color:var(--text-muted);padding-top:10px;border-top:1px solid var(--border-light)}
+.track-card__meta strong{color:var(--text-primary)}
+.track-card__cta{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:2px}
+
+/* ============================================================
+   BENEFITS ("Why SkillForge") — icon-forward list, not emoji cards
+   ============================================================ */
+.feature-grid{display:grid;grid-template-columns:1fr;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden}
+@media(min-width:640px){.feature-grid{grid-template-columns:1fr 1fr}}
+@media(min-width:960px){.feature-grid{grid-template-columns:1fr 1fr 1fr}}
+.feature-card{background:var(--surface);padding:24px;display:flex;flex-direction:column;gap:10px}
+.feature-card .icon{
+  width:38px;height:38px;border-radius:10px;background:var(--primary-light);color:var(--primary);
+  display:flex;align-items:center;justify-content:center;font-size:1rem;
+}
+.feature-card .icon svg{width:19px;height:19px}
+.feature-card .title{font-weight:700;font-size:.98rem}
+.feature-card .desc{font-size:.85rem;color:var(--text-muted);line-height:1.6}
+
+/* ============================================================
+   STEPS ("How learning works") — legitimate sequence, numbered
+   ============================================================ */
+.steps{display:grid;grid-template-columns:1fr;gap:0;position:relative}
+@media(min-width:760px){
+  .steps{grid-template-columns:repeat(4,1fr);gap:20px}
+}
+.step{position:relative;padding:0 4px 0 0}
+.step .num{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:32px;height:32px;border-radius:9px;background:var(--ink-900);color:#fff;
+  font-weight:800;font-size:.85rem;margin-bottom:14px;
+}
+.step .title{font-weight:700;font-size:.95rem;margin-bottom:4px}
+.step .desc{font-size:.83rem;color:var(--text-muted);line-height:1.6}
+@media(min-width:760px){
+  .step:not(:last-child)::after{
+    content:'';position:absolute;top:16px;left:calc(100% - 4px);width:calc(20px + 8px);
+    height:1px;background:var(--border);
+  }
+}
+@media(max-width:759px){
+  .step{padding-left:44px;padding-bottom:24px;border-left:1px solid var(--border);margin-left:15px}
+  .step .num{position:absolute;left:-16px;top:0}
+  .step:last-child{padding-bottom:0;border-left-color:transparent}
+}
+
+/* ============================================================
+   PLATFORM PREVIEW
+   ============================================================ */
+.preview-panel{
+  display:grid;grid-template-columns:1.3fr 1fr;gap:0;
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);
+  overflow:hidden;box-shadow:var(--shadow-sm);
+}
+@media(max-width:820px){.preview-panel{grid-template-columns:1fr}}
+.preview-panel__main{padding:28px;border-right:1px solid var(--border)}
+@media(max-width:820px){.preview-panel__main{border-right:none;border-bottom:1px solid var(--border)}}
+.preview-panel__head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.preview-panel__head h3{font-size:1rem}
+.preview-row{display:flex;align-items:center;gap:14px;padding:12px 0;border-bottom:1px solid var(--border-light)}
+.preview-row:last-child{border-bottom:none}
+.preview-row__ring{width:38px;height:38px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center}
+.preview-row__copy{flex:1;min-width:0}
+.preview-row__copy strong{display:block;font-size:.88rem}
+.preview-row__copy span{font-size:.76rem;color:var(--text-muted)}
+.preview-panel__side{padding:28px;background:var(--surface-alt);display:flex;flex-direction:column;gap:18px}
+.preview-stat{display:flex;flex-direction:column;gap:2px}
+.preview-stat .n{font-size:1.5rem;font-weight:800;letter-spacing:-0.01em}
+.preview-stat .l{font-size:.76rem;color:var(--text-muted)}
+.preview-note{font-size:.78rem;color:var(--text-muted);border-top:1px solid var(--border);padding-top:14px}
+
+/* ============================================================
+   COMMUNITY
+   ============================================================ */
+.community-grid{display:grid;grid-template-columns:1fr;gap:16px}
+@media(min-width:760px){.community-grid{grid-template-columns:1fr 1fr 1fr}}
+.community-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:22px}
+.community-card .icon{width:34px;height:34px;border-radius:9px;background:var(--primary-light);color:var(--primary);display:flex;align-items:center;justify-content:center;margin-bottom:12px}
+.community-card .icon svg{width:17px;height:17px}
+.community-card h3{font-size:.95rem;margin-bottom:6px}
+.community-card p{font-size:.84rem;color:var(--text-muted);line-height:1.6}
+
+/* ============================================================
+   CTA BAND
+   ============================================================ */
+.cta-band{padding:56px 0;background:var(--ink-900);color:#fff;text-align:center}
+.cta-band h2{font-size:clamp(1.4rem,3.4vw,1.9rem);font-weight:800;margin-bottom:8px;color:#fff}
+.cta-band p{color:rgba(255,255,255,.68);font-size:.92rem;margin-bottom:22px}
+.cta-band .btn{min-width:200px}
+.cta-band .btn-secondary{background:transparent;color:#fff;border-color:rgba(255,255,255,.28)}
+.cta-band .btn-secondary:hover{background:rgba(255,255,255,.08)}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.site-footer{padding:44px 0 24px;background:var(--ink-900);color:rgba(255,255,255,.6)}
+.footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:32px;padding-bottom:28px;border-bottom:1px solid rgba(255,255,255,.1);margin-bottom:20px}
+@media(max-width:680px){.footer-grid{grid-template-columns:1fr;gap:24px}}
+.footer-brand{display:flex;align-items:center;gap:8px;font-weight:800;color:#fff;margin-bottom:10px}
+.footer-brand .logo-icon{width:28px;height:28px;background:var(--primary);color:#fff;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.7rem}
+.footer-tagline{font-size:.85rem;line-height:1.6;max-width:280px}
+.footer-col h4{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:rgba(255,255,255,.85);margin-bottom:12px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+.footer-col a,.footer-col button{
+  background:none;border:none;padding:0;color:rgba(255,255,255,.6);text-decoration:none;
+  font-size:.84rem;font-family:var(--font);cursor:pointer;text-align:left;transition:color var(--transition);
+}
+.footer-col a:hover,.footer-col button:hover{color:#fff}
+.site-footer .bottom{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;font-size:.78rem}
+.footer-links{display:flex;gap:16px;flex-wrap:wrap}
+.footer-links a{color:rgba(255,255,255,.6);text-decoration:none;transition:color var(--transition)}
+.footer-links a:hover{color:#fff}
+
+/* Kept for defensiveness in case any static markup still references
+   the pre-redesign hero/emphasis classes. */
+.highlight{font-weight:800}
+
+/* ============================================================
+   ANNOUNCEMENTS
+   ============================================================ */
+.announcements-section{background:var(--surface-alt)}
+.announcement-grid{display:grid;grid-template-columns:1fr;gap:12px}
+@media(min-width:640px){.announcement-grid{grid-template-columns:1fr 1fr}}
+.announcement-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  padding:16px 18px;transition:border-color var(--transition);
+}
+.announcement-card:hover{border-color:var(--ink-300)}
+.announcement-card__meta{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px;color:var(--text-muted);font-size:.74rem}
+.announcement-badge{color:var(--primary);background:var(--primary-light);border-radius:var(--radius-full);font-weight:700;padding:3px 10px}
+.announcement-card h3{font-size:.95rem;margin-bottom:5px;font-weight:700}
+.announcement-card p{color:var(--text-secondary);font-size:.86rem;white-space:pre-wrap;line-height:1.6}
+
+/* ============================================================
+   RESPONSIVE — HERO / SECTIONS
+   ============================================================ */
+@media(max-width:900px){
+  .hero-grid{grid-template-columns:1fr}
+  .hero-visual{order:-1;max-width:420px}
+  .hero-visual__badge{display:none}
+}
+@media(max-width:480px){
+  .hero{padding:36px 0 44px}
+  .section{padding:40px 0}
+  .hero-actions .btn{min-width:100%}
+  .hero-visual__card{margin:0 2px}
+  .hero-visual__body{padding:16px}
+  .hero-visual__foot{padding:12px 16px}
+}
+@keyframes homeRise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes homeFloat{from{opacity:0;transform:translateY(16px) scale(.985)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion: reduce){.hero-copy>*,.hero-visual__card{animation:none}}

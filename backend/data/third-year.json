@@ -1,0 +1,587 @@
+{
+  "version": "1.0",
+  "year": "3rd",
+  "subject": "Full Stack Web Development",
+  "questions": [
+    {
+      "id": "3y-001",
+      "level": 1,
+      "topic": "Web Basics",
+      "difficulty": "easy",
+      "question": "What is a web browser?",
+      "options": [
+        "Software to access and display web content",
+        "A programming language",
+        "A database management system",
+        "A server-side framework"
+      ],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "3y-002",
+      "level": 1,
+      "topic": "Web Basics",
+      "difficulty": "easy",
+      "question": "What is a web server?",
+      "options": [
+        "Computer that hosts websites and handles requests",
+        "A browser extension",
+        "A type of database",
+        "A frontend framework"
+      ],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "3y-003",
+      "level": 1,
+      "topic": "Request & Response",
+      "difficulty": "easy",
+      "question": "What is an HTTP request?",
+      "options": [
+        "Message from client to server",
+        "Message from server to client",
+        "A database query",
+        "A JavaScript function"
+      ],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "3y-004",
+      "level": 1,
+      "topic": "Request & Response",
+      "difficulty": "easy",
+      "question": "What is an HTTP response?",
+      "options": [
+        "Message from server to client",
+        "Message from client to server",
+        "HTML tag",
+        "CSS property"
+      ],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "3y-005",
+      "level": 1,
+      "topic": "Frontend & Backend",
+      "difficulty": "easy",
+      "question": "What is the frontend?",
+      "options": [
+        "Part users see and interact with",
+        "Database that stores data",
+        "Server-side logic",
+        "API layer"
+      ],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "3y-006",
+      "level": 1,
+      "topic": "Frontend & Backend",
+      "difficulty": "easy",
+      "question": "What is the backend?",
+      "options": [
+        "Server-side logic and data handling",
+        "User interface",
+        "CSS stylesheets",
+        "HTML structure"
+      ],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "3y-007",
+      "level": 1,
+      "topic": "Database",
+      "difficulty": "easy",
+      "question": "What is a database in web development?",
+      "options": [
+        "Structured collection of data",
+        "Programming language",
+        "Web server",
+        "Browser extension"
+      ],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "3y-008",
+      "level": 1,
+      "topic": "Node.js",
+      "difficulty": "easy",
+      "question": "What is Node.js?",
+      "options": [
+        "JavaScript runtime outside the browser",
+        "Frontend framework",
+        "Database system",
+        "CSS preprocessor"
+      ],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "3y-009",
+      "level": 1,
+      "topic": "Node.js",
+      "difficulty": "easy",
+      "question": "How do you run a Node.js file named app.js?",
+      "options": [
+        "node app.js",
+        "npm start app.js",
+        "node run app.js",
+        "js app.js"
+      ],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "3y-010",
+      "level": 1,
+      "topic": "Express.js",
+      "difficulty": "easy",
+      "question": "What is Express.js?",
+      "options": [
+        "A web framework for Node.js",
+        "A database for Node.js",
+        "A frontend library",
+        "A testing framework"
+      ],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "3y-011",
+      "level": 1,
+      "topic": "Data Flow",
+      "difficulty": "medium",
+      "question": "What happens after a user enters a URL in the browser?",
+      "options": [
+        "Browser sends a request to the server",
+        "Browser creates a new database",
+        "Server changes the URL",
+        "The page loads instantly"
+      ],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "3y-012",
+      "level": 1,
+      "topic": "Data Flow",
+      "difficulty": "medium",
+      "question": "What happens after the server processes a request?",
+      "options": [
+        "The server sends a response to the browser",
+        "The browser sends another request",
+        "The database is updated automatically",
+        "The user sees an error"
+      ],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "3y-013",
+      "level": 1,
+      "topic": "MVC",
+      "difficulty": "medium",
+      "question": "What does MVC stand for?",
+      "options": [
+        "Model View Controller",
+        "Module View Controller",
+        "Model Visual Controller",
+        "Main View Control"
+      ],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "3y-014",
+      "level": 1,
+      "topic": "MVC",
+      "difficulty": "medium",
+      "question": "What is the Model responsible for in MVC?",
+      "options": [
+        "Data and business logic",
+        "User interface",
+        "Handling user input",
+        "Routing requests"
+      ],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "3y-015",
+      "level": 1,
+      "topic": "MERN / MEAN",
+      "difficulty": "medium",
+      "question": "What does MERN stand for?",
+      "options": [
+        "MongoDB, Express, React, Node.js",
+        "MongoDB, Express, Angular, Node.js",
+        "MySQL, Express, React, Node.js",
+        "MongoDB, Ember, React, Node.js"
+      ],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "3y-016",
+      "level": 1,
+      "topic": "MERN / MEAN",
+      "difficulty": "medium",
+      "question": "What does MEAN stand for?",
+      "options": [
+        "MongoDB, Express, Angular, Node.js",
+        "MongoDB, Express, React, Node.js",
+        "MySQL, Express, Angular, Node.js",
+        "MongoDB, Ember, Angular, Node.js"
+      ],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "3y-017",
+      "level": 1,
+      "topic": "Node.js",
+      "difficulty": "medium",
+      "question": "What is NPM in the Node.js ecosystem?",
+      "options": [
+        "Node Package Manager for dependencies",
+        "A programming language",
+        "A database",
+        "A Node.js framework"
+      ],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "3y-018",
+      "level": 1,
+      "topic": "Express.js",
+      "difficulty": "medium",
+      "question": "What are routes in Express.js used for?",
+      "options": [
+        "URL paths that handle HTTP requests",
+        "Database connections",
+        "Middleware functions",
+        "Frontend components"
+      ],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "3y-019",
+      "level": 1,
+      "topic": "MongoDB",
+      "difficulty": "medium",
+      "question": "What type of database is MongoDB?",
+      "options": [
+        "NoSQL document database",
+        "SQL relational database",
+        "Key-value store",
+        "Graph database"
+      ],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "3y-020",
+      "level": 1,
+      "topic": "MongoDB",
+      "difficulty": "medium",
+      "question": "What is a collection in MongoDB?",
+      "options": [
+        "A group of documents, like a table in SQL",
+        "A single document",
+        "The entire database",
+        "A field in a document"
+      ],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "3y-021",
+      "level": 2,
+      "topic": "HTTP Services",
+      "difficulty": "hard",
+      "question": "What is an API?",
+      "options": [
+        "A set of rules for building and interacting with software",
+        "A programming language",
+        "A database schema",
+        "A web server"
+      ],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "3y-022",
+      "level": 2,
+      "topic": "HTTP Services",
+      "difficulty": "hard",
+      "question": "Which HTTP method is most commonly used to retrieve data?",
+      "options": ["GET", "POST", "PUT", "DELETE"],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "3y-023",
+      "level": 2,
+      "topic": "Data Flow",
+      "difficulty": "hard",
+      "question": "In a full stack application, where does the database typically interact?",
+      "options": [
+        "With the backend",
+        "Directly with the browser",
+        "With the frontend",
+        "With the user"
+      ],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "3y-024",
+      "level": 2,
+      "topic": "Node.js",
+      "difficulty": "hard",
+      "question": "What is a callback in Node.js?",
+      "options": [
+        "A function passed to another function to be executed later",
+        "An event listener",
+        "A promise-based function",
+        "A synchronous function"
+      ],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "3y-025",
+      "level": 2,
+      "topic": "Node.js",
+      "difficulty": "hard",
+      "question": "Which function is used to create a timer delay in Node.js?",
+      "options": ["setTimeout()", "setTimer()", "createTimer()", "delay()"],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "3y-026",
+      "level": 2,
+      "topic": "MongoDB",
+      "difficulty": "hard",
+      "question": "What is CRUD in database operations?",
+      "options": [
+        "Create, Read, Update, Delete",
+        "Create, Retrieve, Update, Drop",
+        "Connect, Read, Use, Delete",
+        "Create, Replace, Update, Delete"
+      ],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "3y-027",
+      "level": 2,
+      "topic": "Data Flow",
+      "difficulty": "hard",
+      "question": "How does the frontend communicate with the backend?",
+      "options": [
+        "Through HTTP requests to API endpoints",
+        "Through direct database connections",
+        "Through file system access",
+        "Through WebSocket only"
+      ],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "3y-028",
+      "level": 2,
+      "topic": "HTTP Services",
+      "difficulty": "hard",
+      "question": "What is the purpose of an HTTP status code?",
+      "options": [
+        "Indicates the result of a request (success, error, etc.)",
+        "Encrypts the request",
+        "Caches the response",
+        "Redirects the user"
+      ],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "3y-029",
+      "level": 2,
+      "topic": "MVC",
+      "difficulty": "hard",
+      "question": "What is the View responsible for in MVC?",
+      "options": [
+        "Presenting data to the user",
+        "Handling data storage",
+        "Managing business logic",
+        "Controlling user input"
+      ],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "3y-030",
+      "level": 2,
+      "topic": "MERN / MEAN",
+      "difficulty": "hard",
+      "question": "Which frontend technology is used in the MERN stack?",
+      "options": ["React", "Angular", "Vue.js", "Ember.js"],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "3y-031",
+      "level": 2,
+      "topic": "Data Flow",
+      "difficulty": "hard",
+      "question": "Which flow best represents a typical web application architecture?",
+      "options": [
+        "User → Browser → Backend → Database → Backend → Browser → User",
+        "User → Database → Browser",
+        "Browser → Database → User",
+        "User → Database → Frontend"
+      ],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "3y-032",
+      "level": 2,
+      "topic": "Architecture",
+      "difficulty": "hard",
+      "question": "A food ordering app stores customer orders. Where should order data be stored?",
+      "options": [
+        "In the database",
+        "In the browser memory",
+        "In the frontend state",
+        "In the HTML page"
+      ],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "3y-033",
+      "level": 2,
+      "topic": "Architecture",
+      "difficulty": "hard",
+      "question": "If the database is unavailable, which part of the application will likely fail?",
+      "options": [
+        "Operations that need to read/write data",
+        "Only the frontend display",
+        "The CSS styles",
+        "The HTML structure"
+      ],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "3y-034",
+      "level": 2,
+      "topic": "Interview Thinking",
+      "difficulty": "hard",
+      "question": "An interviewer asks: \"What happens when a user enters a URL in a browser?\" Which explanation is most technically accurate?",
+      "options": [
+        "Browser sends request → Server processes → Server sends response → Browser renders",
+        "Browser creates HTML → Server stores → Browser displays",
+        "Server sends request → Browser processes → Database updates",
+        "Browser opens file → Server responds → User sees page"
+      ],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "3y-035",
+      "level": 2,
+      "topic": "Node.js",
+      "difficulty": "hard",
+      "question": "Given this Node.js code, what does it do? const http = require(\"http\"); http.createServer((req, res) => { res.end(\"Hello\"); }).listen(3000);",
+      "options": [
+        "Creates a web server on port 3000",
+        "Connects to a database",
+        "Sends an email",
+        "Renders HTML"
+      ],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "3y-036",
+      "level": 2,
+      "topic": "Data Flow",
+      "difficulty": "hard",
+      "question": "Which flow best represents a typical web application architecture?",
+      "options": [
+        "User → Browser → Backend → Database → Backend → Browser → User",
+        "User → Database → Browser",
+        "Browser → Database → User",
+        "User → Database → Frontend"
+      ],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "3y-037",
+      "level": 2,
+      "topic": "MERN / MEAN",
+      "difficulty": "hard",
+      "question": "What is the key difference between MERN and MEAN stacks?",
+      "options": [
+        "MERN uses React, MEAN uses Angular",
+        "MERN uses Angular, MEAN uses React",
+        "MERN uses MySQL, MEAN uses MongoDB",
+        "They are identical stacks with different names"
+      ],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "3y-038",
+      "level": 2,
+      "topic": "MVC",
+      "difficulty": "hard",
+      "question": "Which part of MVC handles user input and coordinates the Model and View?",
+      "options": ["Controller", "Model", "View", "Router"],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "3y-039",
+      "level": 2,
+      "topic": "Interview Thinking",
+      "difficulty": "hard",
+      "question": "An interviewer asks: \"Why do we need Node.js for full stack development?\" What's the best answer?",
+      "options": [
+        "It allows JavaScript to run on the server, enabling a unified language across frontend and backend",
+        "It is the only way to create web applications",
+        "It is a database management system",
+        "It replaces HTML and CSS"
+      ],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "3y-040",
+      "level": 2,
+      "topic": "Data Flow",
+      "difficulty": "hard",
+      "question": "In the full stack flow, the backend processes the request and accesses the database. What happens after the data is retrieved?",
+      "options": [
+        "Backend sends response to the frontend/browser",
+        "Database sends response directly to the browser",
+        "Frontend processes the data directly",
+        "User receives the raw data"
+      ],
+      "correct": 0,
+      "reference": ""
+    }
+  ]
+}

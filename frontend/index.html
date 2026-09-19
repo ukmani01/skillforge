@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#101828" />
+<meta name="description" content="SkillForge — Learn. Practice. Assess. Full stack learning platform with interactive quizzes." />
+<title>SkillForge — Learn. Practice. Assess.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/css/base.css" />
+<link rel="stylesheet" href="/css/portal.css" />
+<link rel="stylesheet" href="/css/home.css" />
+</head>
+<body>
+
+<div id="welcomeLoader" class="welcome-loader" role="status" aria-live="polite">
+  <div class="welcome-loader__mark">SF</div>
+  <strong>Welcome to SkillForge</strong>
+  <span>Preparing your learning space</span>
+  <i class="welcome-loader__line"></i>
+</div>
+
+<!-- ============================================================
+     NAVBAR
+     ============================================================ -->
+<header class="navbar" role="navigation" aria-label="Main navigation">
+  <div class="navbar-inner">
+    <div class="navbar-brand" onclick="goHome()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();goHome();}" role="button" tabindex="0" aria-label="Home">
+      <span class="logo-icon">SF</span>
+      <span>SkillForge</span>
+    </div>
+
+    <nav class="navbar-links" aria-label="Primary">
+      <button type="button" onclick="scrollToSection('tracksSection')">Explore</button>
+      <button type="button" onclick="scrollToSection('howItWorks')">How it works</button>
+      <button type="button" onclick="scrollToSection('communitySection')">Community</button>
+    </nav>
+
+    <div class="navbar-actions">
+      <button class="navbar-trainer-link" type="button" onclick="goTrainer()">Trainer</button>
+      <button id="portalNavBtn" class="btn btn-secondary btn-sm" type="button" onclick="goStudentPortal()">Log in</button>
+      <button class="navbar-burger" type="button" onclick="toggleMobileNav(true)" aria-label="Open menu" aria-controls="mobileDrawer">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile drawer -->
+<div class="mobile-drawer" id="mobileDrawer" aria-hidden="true">
+  <div class="mobile-drawer__scrim" onclick="toggleMobileNav(false)"></div>
+  <div class="mobile-drawer__panel" role="dialog" aria-label="Menu">
+    <div class="mobile-drawer__header">
+      <div class="navbar-brand" style="cursor:default;">
+        <span class="logo-icon">SF</span>
+        <span>SkillForge</span>
+      </div>
+      <button class="mobile-drawer__close" type="button" onclick="toggleMobileNav(false)" aria-label="Close menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/></svg>
+      </button>
+    </div>
+    <button class="navlink" type="button" onclick="toggleMobileNav(false);scrollToSection('tracksSection')">Explore</button>
+    <button class="navlink" type="button" onclick="toggleMobileNav(false);scrollToSection('howItWorks')">How it works</button>
+    <button class="navlink" type="button" onclick="toggleMobileNav(false);scrollToSection('communitySection')">Community</button>
+    <hr />
+    <button class="btn btn-primary" type="button" onclick="goStudentPortal()">Log in</button>
+    <button class="btn btn-secondary" type="button" onclick="goTrainer()">Trainer dashboard</button>
+  </div>
+</div>
+
+<!-- ============================================================
+     MAIN
+     ============================================================ -->
+<main id="app">
+
+  <!-- ==========================================================
+       HOME — HERO + MARKETING SECTIONS
+       ========================================================== -->
+  <div id="homeView">
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <span class="hero-badge">2026 cohort now open</span>
+          <h1 class="hero-title">Learn a skill. Practice until it sticks.</h1>
+          <p class="hero-description">
+            SkillForge helps students master full stack development through
+            interactive quizzes, real-time progress tracking, and a
+            supportive learning community.
+          </p>
+          <div class="hero-actions">
+            <button class="btn btn-primary" type="button" onclick="scrollToLanding()">Start Learning</button>
+            <button class="btn btn-secondary" type="button" onclick="scrollToSection('tracksSection')">Explore Learning</button>
+          </div>
+          <div class="hero-stats">
+            <div class="hero-stat">
+              <div class="value" id="heroTotalStudents">—</div>
+              <div class="label">Students</div>
+            </div>
+            <div class="hero-stat">
+              <div class="value" id="heroAvgScore">—</div>
+              <div class="label">Avg Score</div>
+            </div>
+            <div class="hero-stat">
+              <div class="value">80</div>
+              <div class="label">Questions</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual" aria-hidden="true">
+          <div class="hero-visual__card">
+            <div class="hero-visual__bar">
+              <span class="hero-visual__dot"></span><span class="hero-visual__dot"></span><span class="hero-visual__dot"></span>
+            </div>
+            <div class="hero-visual__body">
+              <div class="hero-visual__q">Which HTML element defines the main content of a document?</div>
+              <div class="hero-visual__opt"><span class="letter">A</span> &lt;section&gt;</div>
+              <div class="hero-visual__opt is-correct"><span class="letter">B</span> &lt;main&gt;</div>
+              <div class="hero-visual__opt"><span class="letter">C</span> &lt;body&gt;</div>
+            </div>
+            <div class="hero-visual__foot">
+              <span class="text-xs text-muted">Question 7 of 20</span>
+              <span class="badge badge-primary">Level 2</span>
+            </div>
+          </div>
+          <div class="hero-visual__badge">
+            <div class="hero-visual__ring"><span>82%</span></div>
+            <div>
+              <div style="font-weight:700;font-size:.82rem;">Nice progress</div>
+              <div class="text-xs text-muted">Full Stack · Level 2</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ANNOUNCEMENTS -->
+    <section class="section announcements-section" aria-labelledby="announcementsTitle">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-kicker">Trainer updates</span>
+          <h2 class="section-title" id="announcementsTitle">Latest announcements</h2>
+          <p class="section-subtitle">Important instructions, dates, and next steps from your trainers.</p>
+        </div>
+        <div id="homeAnnouncements" class="announcement-grid" aria-live="polite">
+          <p class="text-muted text-center">Loading announcements...</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- LEARNING PATHS / TRACKS -->
+    <section class="section section-alt" id="tracksSection">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-kicker">Learning paths</span>
+          <h2 class="section-title">Choose your track</h2>
+          <p class="section-subtitle">Two focused tracks, each built from real interview and coursework topics.</p>
+        </div>
+        <div class="track-grid">
+
+          <div class="track-card">
+            <div class="track-card__top">
+              <div class="track-card__icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+              </div>
+              <span class="badge badge-primary">2nd Year</span>
+            </div>
+            <div>
+              <h3>HTML Fundamentals</h3>
+              <p>Core markup, semantics, forms, and accessibility — the foundation every developer needs first.</p>
+            </div>
+            <div class="track-card__meta">
+              <span>Difficulty: <strong>Beginner</strong></span>
+              <span>Questions: <strong>20</strong></span>
+            </div>
+            <div class="track-card__cta">
+              <span class="text-xs text-muted">Start with the basics</span>
+              <button class="btn btn-primary btn-sm" type="button" onclick="scrollToLanding();if(window.selectYear)selectYear('2nd');">Start assessment</button>
+            </div>
+          </div>
+
+          <div class="track-card">
+            <div class="track-card__top">
+              <div class="track-card__icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              </div>
+              <span class="badge badge-primary">3rd Year</span>
+            </div>
+            <div>
+              <h3>Full Stack Development</h3>
+              <p>Front end, back end, and the connective tissue between them — for students ready to build complete apps.</p>
+            </div>
+            <div class="track-card__meta">
+              <span>Difficulty: <strong>Intermediate</strong></span>
+              <span>Questions: <strong>20</strong></span>
+            </div>
+            <div class="track-card__cta">
+              <span class="text-xs text-muted">For students who know the basics</span>
+              <button class="btn btn-primary btn-sm" type="button" onclick="scrollToLanding();if(window.selectYear)selectYear('3rd');">Start assessment</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- WHY SKILLFORGE -->
+    <section class="section">
+      <div class="container">
+        <div class="section-header centered">
+          <span class="section-kicker">Why SkillForge</span>
+          <h2 class="section-title">Built for how students actually learn</h2>
+          <p class="section-subtitle">A focused platform, not a feature dump.</p>
+        </div>
+        <div class="feature-grid">
+          <div class="feature-card">
+            <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span>
+            <div class="title">Structured quizzes</div>
+            <div class="desc">80 curated questions across HTML fundamentals and full stack web development.</div>
+          </div>
+          <div class="feature-card">
+            <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="20" x2="20" y2="20"/><rect x="6" y="12" width="3" height="8"/><rect x="13" y="7" width="3" height="13"/></svg></span>
+            <div class="title">Progress tracking</div>
+            <div class="desc">See your scores, difficulty breakdowns, and improvement over time.</div>
+          </div>
+          <div class="feature-card">
+            <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.6 6.6L21 10l-5 4.2L17.4 21 12 17.3 6.6 21 8 14.2 3 10l6.4-1.4z"/></svg></span>
+            <div class="title">Leaderboard</div>
+            <div class="desc">Compare with peers. See where you stand — best attempts ranked by percentage.</div>
+          </div>
+          <div class="feature-card">
+            <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></span>
+            <div class="title">Live chat</div>
+            <div class="desc">Connect with your teacher in real time for help and guidance.</div>
+          </div>
+          <div class="feature-card">
+            <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="13"/><circle cx="12" cy="16" r=".5" fill="currentColor"/></svg></span>
+            <div class="title">Ask questions</div>
+            <div class="desc">Post questions to the community and learn from others.</div>
+          </div>
+          <div class="feature-card">
+            <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17.3 6.6 21 8 14.2 3 10l6.4-1.4L12 2l2.6 6.6L21 10l-5 4.2L17.4 21z"/></svg></span>
+            <div class="title">Submit feedback</div>
+            <div class="desc">Tell us how we're doing. Your feedback shapes the platform.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="section section-alt" id="howItWorks">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-kicker">Getting started</span>
+          <h2 class="section-title">How learning works</h2>
+          <p class="section-subtitle">Four steps from sign-up to a tracked, improving score.</p>
+        </div>
+        <div class="steps">
+          <div class="step">
+            <div class="num">1</div>
+            <div class="title">Register</div>
+            <div class="desc">Create your student account in seconds.</div>
+          </div>
+          <div class="step">
+            <div class="num">2</div>
+            <div class="title">Choose a track</div>
+            <div class="desc">Select HTML Fundamentals or Full Stack.</div>
+          </div>
+          <div class="step">
+            <div class="num">3</div>
+            <div class="title">Take the assessment</div>
+            <div class="desc">Answer 20 questions per level.</div>
+          </div>
+          <div class="step">
+            <div class="num">4</div>
+            <div class="title">Track progress</div>
+            <div class="desc">Review results and improve next time.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PLATFORM PREVIEW -->
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-kicker">Inside the platform</span>
+          <h2 class="section-title">See your progress at a glance</h2>
+          <p class="section-subtitle">An example of what your dashboard shows once you start learning — your real numbers will appear here after your first attempt.</p>
+        </div>
+        <div class="preview-panel">
+          <div class="preview-panel__main">
+            <div class="preview-panel__head">
+              <h3>Continue where you left off</h3>
+              <span class="badge badge-primary">Example</span>
+            </div>
+            <div class="preview-row">
+              <div class="preview-row__ring" style="background:conic-gradient(var(--primary) 65%, var(--surface-sunken) 0);"></div>
+              <div class="preview-row__copy"><strong>Full Stack Development</strong><span>In progress · 65% complete</span></div>
+            </div>
+            <div class="preview-row">
+              <div class="preview-row__ring" style="background:var(--success-bg);display:flex;align-items:center;justify-content:center;color:var(--success);font-size:.7rem;font-weight:800;">✓</div>
+              <div class="preview-row__copy"><strong>HTML Fundamentals</strong><span>Completed · Best score 90%</span></div>
+            </div>
+            <div class="preview-row">
+              <div class="preview-row__ring" style="background:var(--surface-sunken);"></div>
+              <div class="preview-row__copy"><strong>Latest attempt</strong><span>16 / 20 correct — 3 days ago</span></div>
+            </div>
+          </div>
+          <div class="preview-panel__side">
+            <div class="preview-stat"><div class="n">82%</div><div class="l">Average score</div></div>
+            <div class="preview-stat"><div class="n">6</div><div class="l">Assessments completed</div></div>
+            <div class="preview-stat"><div class="n">2</div><div class="l">Trainer messages</div></div>
+            <p class="preview-note">Once you log in, this panel reflects your own attempts and messages — nothing here is shared with other students.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMMUNITY -->
+    <section class="section section-alt" id="communitySection">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-kicker">Community</span>
+          <h2 class="section-title">Students helping students</h2>
+          <p class="section-subtitle">SkillForge is a learning community, not just a quiz engine.</p>
+        </div>
+        <div class="community-grid">
+          <div class="community-card">
+            <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="13"/><circle cx="12" cy="16" r=".5" fill="currentColor"/></svg></span>
+            <h3>Ask questions</h3>
+            <p>Post a question when you're stuck and get answers from peers and trainers.</p>
+          </div>
+          <div class="community-card">
+            <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></span>
+            <h3>Message your trainer</h3>
+            <p>Direct, real-time messaging when you need guidance on a topic.</p>
+          </div>
+          <div class="community-card">
+            <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17.3 6.6 21 8 14.2 3 10l6.4-1.4L12 2l2.6 6.6L21 10l-5 4.2L17.4 21z"/></svg></span>
+            <h3>Share feedback</h3>
+            <p>Rate your experience so trainers know what's working and what isn't.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA BAND -->
+    <section class="cta-band">
+      <div class="container">
+        <h2>Start building your skills today.</h2>
+        <p>Join students already using SkillForge to master full stack development.</p>
+        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+          <button class="btn btn-primary" type="button" onclick="scrollToLanding()">Start Learning</button>
+          <button class="btn btn-secondary" type="button" onclick="openStudentPortal()">Student Login</button>
+        </div>
+      </div>
+    </section>
+
+  </div>
+  <!-- /homeView -->
+
+  <!-- ==========================================================
+       LANDING / YEAR SELECTION (Quiz Entry)
+       ========================================================== -->
+  <section id="landing" class="card container hidden" style="margin-top:32px;max-width:640px;">
+    <span class="eyebrow">Assessment setup</span>
+    <h2 style="margin-bottom:6px;">Start your assessment</h2>
+    <p class="text-muted text-sm" style="margin-bottom:20px;">
+      Enter your details and select your year.
+    </p>
+
+    <div class="form-group">
+      <label for="studentName">Full Name</label>
+      <input type="text" id="studentName" class="form-control" placeholder="e.g. Manikandan" autocomplete="name" />
+    </div>
+    <div class="form-group">
+      <label for="studentEmail">Email</label>
+      <input type="email" id="studentEmail" class="form-control" placeholder="student@college.edu" autocomplete="email" />
+    </div>
+
+    <h4 style="margin:20px 0 10px;font-size:.9rem;">Select your year</h4>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div id="year2nd" class="card year-option" style="cursor:pointer;margin:0;padding:18px;text-align:center;" onclick="selectYear('2nd')" role="button" tabindex="0">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="width:26px;height:26px;color:var(--primary);margin-bottom:6px;"><path d="M2 9l10-5 10 5-10 5-10-5z" stroke-linejoin="round"/><path d="M6 11v5c0 1.5 2.5 3 6 3s6-1.5 6-3v-5" stroke-linecap="round"/></svg>
+        <div><strong>2nd Year</strong></div>
+        <div class="text-muted text-sm">HTML Fundamentals</div>
+      </div>
+      <div id="year3rd" class="card year-option" style="cursor:pointer;margin:0;padding:18px;text-align:center;" onclick="selectYear('3rd')" role="button" tabindex="0">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="width:26px;height:26px;color:var(--primary);margin-bottom:6px;"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        <div><strong>3rd Year</strong></div>
+        <div class="text-muted text-sm">Full Stack Development</div>
+      </div>
+    </div>
+
+    <div id="yearError" class="text-sm" style="color:var(--danger);margin-top:10px;display:none;">
+      Please select your year.
+    </div>
+
+    <button class="btn btn-primary btn-block" type="button" onclick="startQuiz()" style="margin-top:20px;">
+      Start Quiz
+    </button>
+
+    <div class="text-center text-sm text-muted" style="margin-top:14px;">
+      <a href="#" onclick="showLanding(); return false;" style="color:var(--primary);text-decoration:none;font-weight:600;">← Back to Home</a>
+    </div>
+  </section>
+
+  <!-- ==========================================================
+       QUIZ ACTIVE
+       ========================================================== -->
+  <section id="quizActive" class="card container hidden" style="margin-top:32px;max-width:680px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:8px;">
+      <div style="display:flex;align-items:center;gap:8px;">
+        <span class="text-xs text-muted">SkillForge</span>
+        <span class="badge badge-primary" id="trackBadge">—</span>
+      </div>
+      <span class="text-sm text-muted">
+        Level <span id="currentLevel">1</span> &nbsp;·&nbsp; Question <span id="qNum">1</span> of <span id="totalQ">20</span>
+      </span>
+    </div>
+
+    <div class="progress-bar" style="margin-bottom:24px;">
+      <div class="fill" id="qProgressFill" style="width:0%;"></div>
+    </div>
+
+    <div id="refContent" class="text-sm text-muted" style="margin-bottom:14px;"></div>
+
+    <h3 id="qText" style="margin-bottom:20px;font-size:1.15rem;font-weight:700;line-height:1.5;">Loading...</h3>
+
+    <div id="qOptions" role="radiogroup" aria-label="Answer options"></div>
+
+    <div style="display:flex;gap:10px;justify-content:space-between;margin-top:24px;flex-wrap:wrap;border-top:1px solid var(--border-light);padding-top:20px;">
+      <button class="btn btn-secondary" id="prevBtn" type="button" onclick="prevQuestion()">← Previous</button>
+      <div style="display:flex;gap:10px;">
+        <button class="btn btn-success" id="submitBtn" type="button" onclick="submitQuiz()">Submit</button>
+        <button class="btn btn-primary" id="nextBtn" type="button" onclick="nextQuestion()">Next →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================
+       QUIZ RESULT
+       ========================================================== -->
+  <section id="quizResult" class="card container hidden" style="margin-top:32px;max-width:560px;text-align:center;">
+    <span class="eyebrow" style="display:block;text-align:center;">Assessment complete</span>
+    <h2 id="resultTitle" style="margin-bottom:6px;">Level Complete</h2>
+    <p class="text-muted text-sm" id="resultStudent">—</p>
+    <p class="text-sm text-muted" id="resultSubject" style="margin-bottom:8px;">—</p>
+
+    <div style="margin:24px 0 8px;">
+      <div style="font-size:2.6rem;font-weight:800;letter-spacing:-0.02em;color:var(--primary);line-height:1;" id="resultPct">0%</div>
+      <div class="text-xs text-muted" style="margin-top:6px;">Your score</div>
+    </div>
+
+    <div style="display:flex;justify-content:center;gap:12px;margin:20px 0;flex-wrap:wrap;">
+      <div class="badge badge-primary" style="padding:8px 16px;font-size:.8rem;" id="resultScore">0/0</div>
+      <div class="badge badge-success" style="padding:8px 16px;font-size:.8rem;">Correct: <span id="resultCorrect">0</span></div>
+      <div class="badge badge-danger" style="padding:8px 16px;font-size:.8rem;">Wrong: <span id="resultWrong">0</span></div>
+    </div>
+
+    <div class="text-sm text-muted" style="margin-bottom:24px;">
+      Level: <strong id="resultLevel" style="color:var(--text-primary);">—</strong>
+      &nbsp;·&nbsp; Previous best: <strong id="resultPrevBest" style="color:var(--text-primary);">—</strong>
+    </div>
+
+    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+      <button class="btn btn-primary" type="button" onclick="openStudentPortal()">View My Portal</button>
+      <button class="btn btn-secondary" type="button" onclick="showLanding()">Back to Home</button>
+    </div>
+  </section>
+
+  <!-- ==========================================================
+       STUDENT PORTAL
+       ========================================================== -->
+  <section id="studentPortal" class="container hidden" style="margin-top:32px;">
+    <div id="studentAuthContainer"></div>
+    <div id="studentPortalContent" class="hidden"></div>
+  </section>
+
+  <!-- ==========================================================
+       DASHBOARD LOGIN
+       ========================================================== -->
+  <section id="dashboardLogin" class="card container hidden" style="margin-top:32px;max-width:400px;">
+    <span class="eyebrow">Trainer access</span>
+    <h2 style="margin-bottom:16px;">Trainer Login</h2>
+    <div class="form-group">
+      <label for="loginEmail">Email</label>
+      <input type="email" id="loginEmail" class="form-control" autocomplete="username" />
+    </div>
+    <div class="form-group">
+      <label for="loginPassword">Password</label>
+      <input type="password" id="loginPassword" class="form-control" autocomplete="current-password" />
+    </div>
+    <div id="loginError" class="alert alert-error hidden"></div>
+    <button class="btn btn-primary btn-block" id="loginBtn" type="button" onclick="dashboardLogin()">Login</button>
+    <div id="loginLoading" class="text-center hidden" style="margin-top:12px;">
+      <span class="spinner"></span>
+    </div>
+    <div class="text-center text-sm text-muted" style="margin-top:14px;">
+      <a href="#" onclick="showLanding(); return false;" style="color:var(--primary);text-decoration:none;font-weight:600;">← Back to Home</a>
+    </div>
+  </section>
+
+  <!-- ==========================================================
+       DASHBOARD (Trainer)
+       ========================================================== -->
+  <section id="dashboard" class="container hidden" style="margin-top:32px;">
+    <div class="portal-header">
+      <h1 style="font-size:1.4rem;">Trainer Dashboard</h1>
+      <button class="btn btn-danger btn-sm" type="button" onclick="adminLogout()">Logout</button>
+    </div>
+
+    <div class="dash-stats">
+      <div class="dash-stat"><div class="n" id="statTotal">0</div><div class="l">Students</div></div>
+      <div class="dash-stat"><div class="n" id="statAvg">0%</div><div class="l">Average score</div></div>
+      <div class="dash-stat"><div class="n" id="statHighest">0/40</div><div class="l">Highest score</div></div>
+      <div class="dash-stat"><div class="n" id="statLowest">0/40</div><div class="l">Lowest score</div></div>
+    </div>
+
+    <div class="dash-tabs" role="tablist">
+      <button class="dash-tab active" type="button" role="tab" onclick="switchDashTab('students', this)">Students</button>
+      <button class="dash-tab" type="button" role="tab" onclick="switchDashTab('messages', this)">Messages</button>
+      <button class="dash-tab" type="button" role="tab" onclick="switchDashTab('announcements', this)">Announcements</button>
+      <button class="dash-tab" type="button" role="tab" onclick="switchDashTab('community', this)">Community &amp; feedback</button>
+    </div>
+
+    <!-- STUDENTS -->
+    <div class="dash-panel" id="dashPanel-students">
+      <div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;">
+        <button class="btn btn-sm filter-btn active" data-year="all" type="button" onclick="setYearFilter('all')">All</button>
+        <button class="btn btn-sm filter-btn" data-year="2nd" type="button" onclick="setYearFilter('2nd')">2nd Year</button>
+        <button class="btn btn-sm filter-btn" data-year="3rd" type="button" onclick="setYearFilter('3rd')">3rd Year</button>
+        <input type="text" id="dashSearch" class="form-control" placeholder="Search students..." style="flex:1;min-width:160px;" oninput="renderDashboard()" aria-label="Search students" />
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Student</th>
+              <th>Year</th>
+              <th>Score</th>
+              <th>%</th>
+              <th>Level</th>
+            </tr>
+          </thead>
+          <tbody id="leaderboardBody">
+            <tr><td colspan="6" class="text-center text-muted">No results yet.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- MESSAGES -->
+    <div class="dash-panel hidden" id="dashPanel-messages">
+      <div class="card" style="margin-bottom:0;">
+        <div class="portal-header"><h3>Student messages</h3><span class="text-xs text-muted">Trainer status: <span id="teacherChatStatus">offline</span></span></div>
+        <div class="chat-box" id="teacherChatBox"></div>
+        <div class="chat-input-row"><input id="teacherChatInput" class="form-control" placeholder="Reply to students..." /><button class="btn btn-primary btn-sm" type="button" onclick="sendTeacherMessage()">Send</button></div>
+      </div>
+    </div>
+
+    <!-- ANNOUNCEMENTS -->
+    <div class="dash-panel hidden" id="dashPanel-announcements">
+      <div class="card" style="margin-bottom:0;">
+        <h3 style="margin-bottom:14px;">Publish announcement</h3>
+        <div class="form-group">
+          <label for="announcementTitle">Title</label>
+          <input id="announcementTitle" class="form-control" placeholder="Announcement title" />
+        </div>
+        <div class="form-group">
+          <label for="announcementBody">Message</label>
+          <textarea id="announcementBody" class="form-control" rows="3" placeholder="Share a message with students..."></textarea>
+        </div>
+        <button class="btn btn-primary btn-sm" type="button" onclick="createAnnouncement()">Publish</button>
+        <div id="announcementMsg" class="text-sm" style="margin-top:10px;"></div>
+      </div>
+    </div>
+
+    <!-- COMMUNITY & FEEDBACK -->
+    <div class="dash-panel hidden" id="dashPanel-community">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+        <div class="card" style="margin:0;">
+          <h3 style="margin-bottom:12px;">Student feedback</h3>
+          <div id="feedbackPanelList"></div>
+        </div>
+        <div class="card" style="margin:0;">
+          <h3 style="margin-bottom:12px;">Community posts</h3>
+          <div id="adminPostsList"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand"><span class="logo-icon">SF</span><span>SkillForge</span></div>
+        <p class="footer-tagline">Learn. Practice. Assess. A focused learning platform for full stack development.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Platform</h4>
+        <ul>
+          <li><button type="button" onclick="scrollToSection('tracksSection')">Explore tracks</button></li>
+          <li><button type="button" onclick="scrollToSection('howItWorks')">How it works</button></li>
+          <li><button type="button" onclick="openStudentPortal()">Student portal</button></li>
+          <li><button type="button" onclick="showDashboardLogin()">Trainer dashboard</button></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Community</h4>
+        <ul>
+          <li><button type="button" onclick="scrollToSection('communitySection')">Ask a question</button></li>
+          <li><button type="button" onclick="openStudentPortal()">Message a trainer</button></li>
+          <li><button type="button" onclick="openStudentPortal()">Give feedback</button></li>
+        </ul>
+      </div>
+    </div>
+    <div class="bottom">
+      <span>© 2026 SkillForge — Learn. Practice. Assess.</span>
+      <div class="footer-links">
+        <a href="#" onclick="showLanding(); return false;">Home</a>
+        <a href="#" onclick="openStudentPortal(); return false;">Student Portal</a>
+        <a href="#" onclick="showDashboardLogin(); return false;">Trainer Dashboard</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ============================================================
+     SCRIPTS
+     ============================================================ -->
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/api.js"></script>
+<script src="/js/utils.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/questionLoader.js"></script>
+<script src="/js/quiz.js"></script>
+<script src="/js/dashboard.js"></script>
+<script src="/js/portal.js"></script>
+<script src="/js/chat-teacher.js"></script>
+<script src="/js/home.js"></script>
+<script>
+  // ------------------------------------------------------------
+  // View controller: only one top-level section visible at a time.
+  // ------------------------------------------------------------
+  var VIEW_IDS = [
+    'homeView',
+    'landing',
+    'quizActive',
+    'quizResult',
+    'studentPortal',
+    'dashboardLogin',
+    'dashboard'
+  ];
+
+  function hideAllViews() {
+    VIEW_IDS.forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) el.classList.add('hidden');
+    });
+  }
+
+  function showView(id) {
+    hideAllViews();
+    var el = document.getElementById(id);
+    if (el) el.classList.remove('hidden');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  window.goHome = function () {
+    if (window.toggleMobileNav) window.toggleMobileNav(false);
+    window.showLanding();
+  };
+
+  window.goTrainer = function () {
+    if (window.toggleMobileNav) window.toggleMobileNav(false);
+    window.showDashboardLogin();
+  };
+
+  window.goStudentPortal = function () {
+    if (window.toggleMobileNav) window.toggleMobileNav(false);
+    window.openStudentPortal();
+  };
+
+  // ------------------------------------------------------------
+  // Public navigation functions
+  // ------------------------------------------------------------
+  window.showLanding = function () {
+    showView('homeView');
+    // If a student is logged in, refresh the navbar button state
+    if (window.studentAuth && window.studentAuth.renderNavbarButton) {
+      window.studentAuth.renderNavbarButton();
+    }
+  };
+
+  window.scrollToLanding = function () {
+    showView('landing');
+    // Prefill name/email if the student is authenticated
+    if (window.studentAuth && window.studentAuth.prefillQuizForm) {
+      window.studentAuth.prefillQuizForm();
+    }
+  };
+
+  // ------------------------------------------------------------
+  // Init on DOM ready
+  // ------------------------------------------------------------
+  document.addEventListener('DOMContentLoaded', function () {
+    window.setTimeout(function () {
+      var loader = document.getElementById('welcomeLoader');
+      if (loader) {
+        loader.classList.add('is-hidden');
+        window.setTimeout(function () { loader.remove(); }, 320);
+      }
+    }, 720);
+    // Restore auth state from the server
+    if (window.studentAuth && window.studentAuth.init) {
+      window.studentAuth.init();
+    }
+    // Fetch hero stats from attempts API (best-effort)
+    if (window.SkillForgeAPI && window.SkillForgeAPI.get) {
+      window.SkillForgeAPI.get('/api/attempts').then(function (r) {
+        if (r && r.ok && r.data && r.data.success) {
+          var attempts = r.data.attempts || [];
+          var unique = {};
+          attempts.forEach(function (a) {
+            if (a && a.studentEmail) unique[a.studentEmail] = true;
+          });
+          var totalStudents = Object.keys(unique).length;
+          var avg = 0;
+          if (attempts.length > 0) {
+            var sum = attempts.reduce(function (acc, a) {
+              return acc + (Number(a.percentage) || 0);
+            }, 0);
+            avg = Math.round(sum / attempts.length);
+          }
+          var elTotal = document.getElementById('heroTotalStudents');
+          var elAvg = document.getElementById('heroAvgScore');
+          if (elTotal) elTotal.textContent = totalStudents;
+          if (elAvg) elAvg.textContent = avg + '%';
+        }
+      }).catch(function () { /* silent */ });
+    }
+  });
+</script>
+
+<!-- ============================================================
+     UI-ONLY ENHANCEMENTS (redesign)
+     Mobile navigation, anchor scrolling, and trainer dashboard
+     tabs. Purely presentational — no business logic, no data
+     handling, nothing here touches the scripts loaded above.
+     ============================================================ -->
+<script>
+  // Mobile nav drawer
+  window.toggleMobileNav = function (open) {
+    var d = document.getElementById('mobileDrawer');
+    if (!d) return;
+    if (open) {
+      d.classList.add('open');
+      d.setAttribute('aria-hidden', 'false');
+    } else {
+      d.classList.remove('open');
+      d.setAttribute('aria-hidden', 'true');
+    }
+  };
+
+  // Smooth-scroll to a section on the home view, switching to
+  // homeView first if the visitor is on a different screen.
+  window.scrollToSection = function (id) {
+    var wasHidden = document.getElementById('homeView') && document.getElementById('homeView').classList.contains('hidden');
+    if (wasHidden && typeof showView === 'function') showView('homeView');
+    var go = function () {
+      var el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+    if (wasHidden) { setTimeout(go, 60); } else { go(); }
+  };
+
+  // Trainer dashboard tabs — shows/hides existing panels only;
+  // every element inside keeps its original id, so dashboard.js /
+  // chat-teacher.js keep working exactly as before.
+  window.switchDashTab = function (name, btnEl) {
+    var panels = document.querySelectorAll('.dash-panel');
+    panels.forEach(function (p) { p.classList.add('hidden'); });
+    var active = document.getElementById('dashPanel-' + name);
+    if (active) active.classList.remove('hidden');
+
+    var tabs = document.querySelectorAll('.dash-tab');
+    tabs.forEach(function (t) { t.classList.remove('active'); });
+    if (btnEl) btnEl.classList.add('active');
+  };
+
+  // Close the mobile drawer if the viewport is resized past the
+  // breakpoint where the burger is hidden.
+  window.addEventListener('resize', function () {
+    if (window.innerWidth > 860) window.toggleMobileNav(false);
+  });
+</script>
+</body>
+</html>

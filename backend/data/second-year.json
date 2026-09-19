@@ -1,0 +1,552 @@
+{
+  "version": "1.0",
+  "year": "2nd",
+  "subject": "HTML Fundamentals",
+  "questions": [
+    {
+      "id": "2y-001",
+      "level": 1,
+      "topic": "HTML Basics",
+      "difficulty": "easy",
+      "question": "What does the <!DOCTYPE html> declaration do?",
+      "options": [
+        "Tells the browser this is an HTML5 document",
+        "Defines the character encoding",
+        "Links to an external stylesheet",
+        "Creates a comment in the code"
+      ],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "2y-002",
+      "level": 1,
+      "topic": "HTML Structure",
+      "difficulty": "easy",
+      "question": "In the HTML document structure, where does the visible page content go?",
+      "options": [
+        "Inside the <body> element",
+        "Inside the <head> element",
+        "Inside the <title> element",
+        "Inside the <html> element directly"
+      ],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "2y-003",
+      "level": 1,
+      "topic": "HTML Tags",
+      "difficulty": "easy",
+      "question": "Which tag correctly creates a paragraph in HTML?",
+      "options": ["<p>", "<paragraph>", "<para>", "<text>"],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "2y-004",
+      "level": 1,
+      "topic": "HTML Tags",
+      "difficulty": "easy",
+      "question": "Which heading tag is the largest (most important) in HTML?",
+      "options": ["<h1>", "<h6>", "<heading>", "<header>"],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "2y-005",
+      "level": 1,
+      "topic": "HTML Elements",
+      "difficulty": "easy",
+      "question": "Which of the following correctly describes an HTML element?",
+      "options": [
+        "Opening tag + content + closing tag",
+        "Only the opening tag",
+        "Only the content inside",
+        "The attribute only"
+      ],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "2y-006",
+      "level": 1,
+      "topic": "HTML Elements",
+      "difficulty": "easy",
+      "question": "Which of these is a self-closing (void) tag?",
+      "options": ["<br>", "<p>", "<div>", "<h1>"],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "2y-007",
+      "level": 1,
+      "topic": "HTML Attributes",
+      "difficulty": "easy",
+      "question": "What is the purpose of the href attribute in an <a> tag?",
+      "options": [
+        "Specifies the URL the link points to",
+        "Sets the font size of the link",
+        "Adds a tooltip to the link",
+        "Defines the link's color"
+      ],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "2y-008",
+      "level": 1,
+      "topic": "HTML Attributes",
+      "difficulty": "easy",
+      "question": "Which attribute provides alternative text for an image?",
+      "options": ["alt", "src", "title", "description"],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "2y-009",
+      "level": 1,
+      "topic": "HTML Lists",
+      "difficulty": "easy",
+      "question": "Which list type uses numbers to order items?",
+      "options": [
+        "Ordered list (<ol>)",
+        "Unordered list (<ul>)",
+        "Definition list (<dl>)",
+        "Menu list (<menu>)"
+      ],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "2y-010",
+      "level": 1,
+      "topic": "HTML Lists",
+      "difficulty": "easy",
+      "question": "What does the <li> tag represent in HTML?",
+      "options": ["A list item", "A link item", "A line item", "A label item"],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "2y-011",
+      "level": 1,
+      "topic": "HTML Structure",
+      "difficulty": "easy-medium",
+      "question": "What is the problem with this HTML? <p>Hello",
+      "options": [
+        "Missing closing </p> tag",
+        "The paragraph text is too short",
+        "The tag should be uppercase",
+        "Nothing is wrong"
+      ],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "2y-012",
+      "level": 1,
+      "topic": "HTML Lists",
+      "difficulty": "easy-medium",
+      "question": "A student is writing a step-by-step guide. Which structure should they use?",
+      "options": [
+        "Ordered list (<ol>)",
+        "Unordered list (<ul>)",
+        "Definition list (<dl>)",
+        "A paragraph with line breaks"
+      ],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "2y-013",
+      "level": 1,
+      "topic": "HTML Lists",
+      "difficulty": "easy-medium",
+      "question": "A student is creating a shopping list. Which list is appropriate?",
+      "options": [
+        "Unordered list (<ul>)",
+        "Ordered list (<ol>)",
+        "Definition list (<dl>)",
+        "A table"
+      ],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "2y-014",
+      "level": 1,
+      "topic": "HTML Attributes",
+      "difficulty": "easy-medium",
+      "question": "In <a href=\"https://example.com\">, what is \"href\" called?",
+      "options": ["An attribute", "A tag", "An element", "Content"],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "2y-015",
+      "level": 1,
+      "topic": "HTML Tags",
+      "difficulty": "easy-medium",
+      "question": "What is the difference between <p> and <div>?",
+      "options": [
+        "<p> is for paragraphs, <div> is a generic container",
+        "They are the same",
+        "<div> is for headings, <p> is for lists",
+        "<p> is inline, <div> is block-level"
+      ],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "2y-016",
+      "level": 1,
+      "topic": "Coding Conventions",
+      "difficulty": "easy-medium",
+      "question": "Why is proper indentation important in HTML?",
+      "options": [
+        "Improves readability and maintainability",
+        "Makes pages load faster",
+        "Is required by search engines",
+        "Changes how the page looks"
+      ],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "2y-017",
+      "level": 1,
+      "topic": "Coding Conventions",
+      "difficulty": "easy-medium",
+      "question": "Should HTML tags be written in uppercase or lowercase?",
+      "options": ["Lowercase", "Uppercase", "It doesn't matter", "CamelCase"],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "2y-018",
+      "level": 1,
+      "topic": "HTML Structure",
+      "difficulty": "easy-medium",
+      "question": "Which tag contains the page title displayed in the browser tab?",
+      "options": [
+        "<title>Student Profile</title>",
+        "<h1>Arun</h1>",
+        "<head>",
+        "<body>"
+      ],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "2y-019",
+      "level": 1,
+      "topic": "HTML Tags",
+      "difficulty": "easy-medium",
+      "question": "What does the <a> tag represent in HTML?",
+      "options": ["An anchor (hyperlink)", "A paragraph", "An image", "A list"],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "2y-020",
+      "level": 1,
+      "topic": "HTML Attributes",
+      "difficulty": "easy-medium",
+      "question": "Which attribute opens a link in a new browser tab?",
+      "options": ["target", "rel", "open", "new"],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "2y-021",
+      "level": 2,
+      "topic": "HTML Lists",
+      "difficulty": "hard",
+      "question": "Can you nest lists inside other lists?",
+      "options": [
+        "Yes, place <ul> or <ol> inside <li>",
+        "No, lists cannot be nested",
+        "Only unordered lists can be nested",
+        "Only ordered lists can be nested"
+      ],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "2y-022",
+      "level": 2,
+      "topic": "HTML Structure",
+      "difficulty": "hard",
+      "question": "What is the purpose of <!DOCTYPE html>?",
+      "options": [
+        "Tells the browser to render in standards mode",
+        "Defines the character set",
+        "Links to an external CSS file",
+        "Creates a comment in the code"
+      ],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "2y-023",
+      "level": 2,
+      "topic": "HTML Elements",
+      "difficulty": "hard",
+      "question": "Which element creates a line break without starting a new paragraph?",
+      "options": ["<br>", "<lb>", "<break>", "<newline>"],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "2y-024",
+      "level": 2,
+      "topic": "HTML Attributes",
+      "difficulty": "hard",
+      "question": "What does the \"id\" attribute do in HTML?",
+      "options": [
+        "Uniquely identifies an element",
+        "Defines the element's style",
+        "Links to another page",
+        "Groups elements together"
+      ],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "2y-025",
+      "level": 2,
+      "topic": "HTML Attributes",
+      "difficulty": "hard",
+      "question": "What is the \"class\" attribute used for?",
+      "options": [
+        "Groups elements for styling or JavaScript",
+        "Uniquely identifies an element",
+        "Defines the element's ID",
+        "Sets the element's href"
+      ],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "2y-026",
+      "level": 2,
+      "topic": "HTML Structure",
+      "difficulty": "hard",
+      "question": "What is the correct hierarchical order of HTML tags?",
+      "options": [
+        "<html> → <head> → <body>",
+        "<body> → <head> → <html>",
+        "<head> → <html> → <body>",
+        "<html> → <body> → <head>"
+      ],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "2y-027",
+      "level": 2,
+      "topic": "HTML Tags",
+      "difficulty": "hard",
+      "question": "Which tag defines a division or section in HTML?",
+      "options": ["<div>", "<section>", "<span>", "<block>"],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "2y-028",
+      "level": 2,
+      "topic": "Code Analysis",
+      "difficulty": "hard",
+      "question": "What will this HTML display in the browser? <h1>Hello</h1><p>World</p>",
+      "options": [
+        "\"Hello\" as heading, \"World\" as paragraph below",
+        "\"Hello World\" on one line",
+        "A blank page with an error",
+        "Only \"Hello\" is visible"
+      ],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "2y-029",
+      "level": 2,
+      "topic": "Code Correction",
+      "difficulty": "hard",
+      "question": "What is wrong with this HTML? <p>Hello</p><p>World",
+      "options": [
+        "Missing closing </p> tag for the second paragraph",
+        "The first paragraph should not be closed",
+        "The tags should be uppercase",
+        "Nothing is wrong"
+      ],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "2y-030",
+      "level": 2,
+      "topic": "Interview Thinking",
+      "difficulty": "hard",
+      "question": "An interviewer asks: \"What is the difference between a tag and an element?\" What is the correct answer?",
+      "options": [
+        "A tag is the markup syntax, an element is tag + content + closing tag",
+        "They are the same thing",
+        "A tag is the closing part, an element is the opening part",
+        "A tag is uppercase, an element is lowercase"
+      ],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "2y-031",
+      "level": 2,
+      "topic": "Interview Thinking",
+      "difficulty": "hard",
+      "question": "If you remove the closing </p> from <p>Hello, what happens?",
+      "options": [
+        "Browser may render following content as part of the first paragraph",
+        "The page crashes",
+        "Nothing changes",
+        "The text becomes bold"
+      ],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "2y-032",
+      "level": 2,
+      "topic": "Code Structure",
+      "difficulty": "hard",
+      "question": "Which HTML code correctly creates a link to an external website?",
+      "options": [
+        "<a href=\"https://google.com\">Google</a>",
+        "<a src=\"https://google.com\">Google</a>",
+        "<link href=\"https://google.com\">Google</link>",
+        "<url=\"https://google.com\">Google</url>"
+      ],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "2y-033",
+      "level": 2,
+      "topic": "Interview Thinking",
+      "difficulty": "hard",
+      "question": "An interviewer asks: \"Why use semantic HTML elements like <article> or <nav>?\" What's the best answer?",
+      "options": [
+        "They improve accessibility and SEO",
+        "They look better in browsers",
+        "They are required by HTML5",
+        "They make code run faster"
+      ],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "2y-034",
+      "level": 2,
+      "topic": "Code Correction",
+      "difficulty": "hard",
+      "question": "Given: <ol><li>Step 1<li>Step 2</li></ol> What is the problem?",
+      "options": [
+        "Step 1 is missing a closing </li> tag",
+        "The list should be <ul> instead of <ol>",
+        "Step 2 is not a valid step",
+        "Nothing is wrong"
+      ],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "2y-035",
+      "level": 2,
+      "topic": "HTML Structure",
+      "difficulty": "hard",
+      "question": "In a complete HTML document, what is the relationship between <head> and <body>?",
+      "options": [
+        "They are sibling elements",
+        "<body> is inside <head>",
+        "<head> is inside <body>",
+        "They are unrelated"
+      ],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "2y-036",
+      "level": 2,
+      "topic": "HTML Attributes",
+      "difficulty": "hard",
+      "question": "What is the purpose of the \"src\" attribute in an <img> tag?",
+      "options": [
+        "Specifies the image file path or URL",
+        "Specifies the image width",
+        "Specifies the image height",
+        "Specifies the image alt text"
+      ],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "2y-037",
+      "level": 2,
+      "topic": "HTML Elements",
+      "difficulty": "hard",
+      "question": "How do you add a comment in HTML that is not displayed in the browser?",
+      "options": [
+        "<!-- comment -->",
+        "// comment",
+        "/* comment */",
+        "# comment"
+      ],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "2y-038",
+      "level": 2,
+      "topic": "HTML Structure",
+      "difficulty": "hard",
+      "question": "What is the role of the <html> tag in an HTML document?",
+      "options": [
+        "It is the root element that contains all other HTML elements",
+        "It defines the document type",
+        "It contains only the visible content",
+        "It is used for styling purposes"
+      ],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "2y-039",
+      "level": 2,
+      "topic": "Code Analysis",
+      "difficulty": "hard",
+      "question": "What will happen if you forget to close the <head> tag?",
+      "options": [
+        "Browser may incorrectly treat body content as part of head",
+        "The page will not load",
+        "The page loads normally with no issues",
+        "Only the title will be displayed"
+      ],
+      "correct": 0,
+      "reference": ""
+    },
+    {
+      "id": "2y-040",
+      "level": 2,
+      "topic": "Interview Thinking",
+      "difficulty": "hard",
+      "question": "An interviewer asks: \"What makes HTML a markup language, not a programming language?\" What is the key distinction?",
+      "options": [
+        "HTML describes structure and content, not logic or computation",
+        "HTML can perform calculations like a programming language",
+        "HTML is a programming language because it has tags",
+        "There is no difference between markup and programming languages"
+      ],
+      "correct": 0,
+      "reference": ""
+    }
+  ]
+}
