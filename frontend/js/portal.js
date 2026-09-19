@@ -9,7 +9,59 @@ var socket=null;
 var activeChatPeer=null;
 var authSubmitting=false;
 var onlineStudentIds={};
+var activeChatType='trainer';
+var mobileChatScreen='main';
 function el(id){return document.getElementById(id);}
+function showMobileChatScreen(screen){
+  mobileChatScreen=screen;
+  var hub=el('mobileChatHub');var workspace=el('chatWorkspace');
+  if(hub)hub.classList.toggle('is-open',screen==='hub');
+  if(workspace){workspace.classList.toggle('mobile-chat-visible',screen==='list'||screen==='conversation');workspace.classList.toggle('mobile-chat-category-students',screen==='list'&&activeChatType==='student');workspace.classList.toggle('mobile-chat-open',screen==='conversation');}
+  document.body.classList.toggle('mobile-chat-active',screen!=='main');
+}
+function openMobileChatHub(){showMobileChatScreen('hub');}
+function openMobileChatCategory(type){
+  if(type==='groups')return;
+  if(type==='trainer'){openTrainerChat();showMobileChatScreen('conversation');return;}
+  activeChatType='student';setChatView('student',null);showMobileChatScreen('list');
+}
+function closeMobileChatHub(){showMobileChatScreen('main');}
+function setChatView(type, peerId){
+  activeChatType=type;
+  var workspace=el('chatWorkspace');
+  if(workspace)workspace.classList.toggle('is-student-chat',type==='student');
+  document.querySelectorAll('[data-chat-view]').forEach(function(button){button.classList.toggle('is-active',button.dataset.chatView===type);});
+  var trainerView=el('chatTrainerView');var studentView=el('chatStudentView');
+  if(trainerView)trainerView.classList.toggle('hidden',type!=='trainer');
+  if(studentView)studentView.classList.toggle('hidden',type!=='student');
+  var title=el('chatHeaderTitle');var subtitle=el('chatHeaderSubtitle');
+  var avatar=el('chatMainAvatar');var badge=el('chatTypeBadge');
+  if(type==='student'){
+    var option=el('dmStudentSelect')&&el('dmStudentSelect').selectedOptions[0];
+    if(title)title.textContent=option&&option.value?option.textContent:'Student connection';
+    if(subtitle)subtitle.textContent='Student connection';
+    if(avatar){avatar.textContent=option&&option.value?(option.textContent||'S').slice(0,1).toUpperCase():'S';avatar.className='chat-main__avatar chat-main__avatar--student';}
+    if(badge){badge.textContent='Student connection';badge.className='chat-main__type-badge chat-main__type-badge--student';}
+  }else{
+    if(title)title.textContent='Trainer';
+    if(subtitle)subtitle.textContent='Mentor conversation';
+    if(avatar){avatar.textContent='T';avatar.className='chat-main__avatar chat-main__avatar--trainer';}
+    if(badge){badge.textContent='Trainer';badge.className='chat-main__type-badge chat-main__type-badge--trainer';}
+  }
+  if(window.innerWidth<=760&&workspace)workspace.classList.toggle('mobile-chat-open',type==='student'&&!!peerId);
+}
+function openTrainerChat(){setChatView('trainer');}
+function openStudentChat(peerId){
+  var select=el('dmStudentSelect');
+  if(select&&peerId)select.value=String(peerId);
+  activeChatPeer=peerId||activeChatPeer;
+  if(activeChatPeer&&socket)socket.emit('join:chat',activeChatPeer);
+  setChatView('student',activeChatPeer);
+  loadDirectMessages();
+}
+function closeMobileChat(){var workspace=el('chatWorkspace');if(workspace)workspace.classList.remove('mobile-chat-open');if(activeChatType==='student'){showMobileChatScreen('list');}else{showMobileChatScreen('hub');}}
+function toggleChatTheme(){document.documentElement.classList.toggle('chat-dark');localStorage.setItem('skillforge-chat-theme',document.documentElement.classList.contains('chat-dark')?'dark':'light');}
+function initChatTheme(){if(localStorage.getItem('skillforge-chat-theme')==='dark')document.documentElement.classList.add('chat-dark');}
 function showOnlyPortal(){
   utils.hideAll(['landing','quizActive','quizResult','dashboardLogin','dashboard']);
   utils.show('studentPortal');
@@ -62,16 +114,28 @@ async function renderPortal(){
    +'<div class="portal-card"><h3>📊 Quiz History</h3><div id="attemptListContainer"><p class="text-muted text-sm">Loading...</p></div></div>'
    +'<div class="portal-card"><h3>📝 Feedback</h3><div class="feedback-stars" id="feedbackStars"><button type="button" data-v="1">⭐</button><button type="button" data-v="2">⭐</button><button type="button" data-v="3">⭐</button><button type="button" data-v="4">⭐</button><button type="button" data-v="5">⭐</button></div><textarea id="feedbackComment" class="form-control" placeholder="Thoughts..." rows="3"></textarea><button id="feedbackSubmitBtn" class="btn btn-primary btn-sm" type="button" style="margin-top:8px;">Submit</button><div id="feedbackMsg" class="text-sm" style="margin-top:6px;"></div></div>'
   +'<div class="portal-card"><h3>💬 Community</h3><input type="text" id="postTitle" class="form-control" placeholder="Title" /><textarea id="postBody" class="form-control" placeholder="Share a question or tip..." rows="3" style="margin-top:8px;"></textarea><button id="postSubmitBtn" class="btn btn-primary btn-sm" type="button" style="margin-top:8px;">Post</button><div id="postMsg" class="text-sm" style="margin-top:6px;"></div><div id="postListContainer" style="margin-top:12px;"></div></div>'
-  +'<div class="portal-card student-chat-card"><div class="portal-section-heading"><div><span class="eyebrow">Your network</span><h3>👥 Student connections</h3></div><span class="status-pill accepted">Connected</span></div><div id="connectedStudentList" class="connected-student-list"></div><div class="form-group"><label>Find students</label><div id="studentDirectoryList"></div></div><div class="form-group"><label>Requests</label><div id="chatRequestList"></div></div><div class="form-group"><label for="dmStudentSelect">Conversation</label><select id="dmStudentSelect" class="form-control"><option value="">Select a connected student</option></select></div><div class="chat-box dm-chat-box" id="dmChatBox"></div><div class="chat-input-row"><input type="text" id="dmChatInput" class="form-control" placeholder="Write a message..." /><button id="dmChatSendBtn" class="btn btn-primary btn-sm" type="button">Send</button></div></div>'
-   +'<div class="portal-card"><h3>🔌 Live Chat</h3><div class="chat-box" id="chatBox"></div><div class="chat-input-row"><input type="text" id="chatInput" class="form-control" placeholder="Message..." /><button id="chatSendBtn" class="btn btn-primary btn-sm" type="button">Send</button></div><div class="text-xs text-muted" style="margin-top:6px;">Status: <span id="chatStatus">disconnected</span></div></div>'
+  +'<button id="chatFab" class="chat-fab" type="button" aria-label="Open messages">💬<span>Chat</span></button><div id="mobileChatHub" class="mobile-chat-hub" aria-hidden="true"><div class="mobile-chat-hub__header"><button id="mobileChatHubBack" type="button" aria-label="Close messages">←</button><div><strong>Messages</strong><small>Choose a conversation</small></div><button id="mobileChatThemeToggle" type="button" aria-label="Toggle dark mode">☾</button></div><div class="mobile-chat-hub__search"><span>⌕</span><input id="mobileChatSearch" type="search" placeholder="Search conversations" aria-label="Search conversations" /></div><div class="mobile-chat-hub__categories"><button type="button" data-mobile-category="trainer" class="mobile-chat-category mobile-chat-category--trainer"><span> T </span><b>Trainer</b><small>Mentor conversations</small><i>›</i></button><button type="button" data-mobile-category="groups" class="mobile-chat-category mobile-chat-category--group"><span> G </span><b>Groups</b><small>No group conversations</small><i>›</i></button><button type="button" data-mobile-category="students" class="mobile-chat-category mobile-chat-category--student"><span> S </span><b>Connected students</b><small>Accepted connections</small><i>›</i></button></div></div>'
+  +'<div class="portal-card chat-workspace" id="chatWorkspace"><aside class="chat-sidebar"><div class="chat-sidebar__heading"><button id="mobileChatListBack" class="mobile-chat-list-back" type="button" aria-label="Back to message categories">←</button><div><span class="eyebrow">Messages</span><h3>Conversations</h3></div><span class="chat-sidebar__status"><i></i> Live</span></div><input id="chatSearch" class="form-control chat-search" type="search" placeholder="Search conversations" aria-label="Search conversations" /><div class="chat-sidebar__section"><span class="chat-sidebar__label">Channels</span><button class="chat-conversation chat-conversation--trainer is-active" data-chat-view="trainer" data-search-name="trainer" type="button"><span class="chat-conversation__icon">T</span><span><strong>Trainer</strong><small>Mentor conversation</small></span><b>›</b></button><button class="chat-conversation chat-conversation--group" type="button" disabled><span class="chat-conversation__icon">G</span><span><strong>Groups</strong><small>No group conversations</small></span></button></div><div class="chat-sidebar__section chat-sidebar__section--students"><span class="chat-sidebar__label">Connected students</span><div id="connectedStudentList" class="connected-student-list"></div><div id="studentDirectoryList"></div><div id="chatRequestList"></div></div><button id="chatThemeToggle" class="chat-theme-toggle" type="button">☾ <span>Dark mode</span></button></aside><section class="chat-main"><header class="chat-main__header"><button id="chatBackBtn" class="chat-main__back" type="button" aria-label="Back to conversations">←</button><span class="chat-main__avatar chat-main__avatar--trainer" id="chatMainAvatar">T</span><div><h3 id="chatHeaderTitle">Trainer</h3><p id="chatHeaderSubtitle">Mentor conversation</p></div><span class="chat-main__type-badge chat-main__type-badge--trainer" id="chatTypeBadge">Trainer</span><span class="chat-main__connection" id="chatStatus"><i></i> offline</span></header><div id="chatTrainerView" class="chat-view chat-view--trainer"><div class="chat-box" id="chatBox"></div><div class="chat-input-row"><input id="chatInput" class="form-control" placeholder="Message your trainer..." /><button id="chatSendBtn" class="btn btn-primary btn-sm" type="button">Send</button></div></div><div id="chatStudentView" class="chat-view chat-view--student hidden"><select id="dmStudentSelect" class="form-control chat-peer-select" aria-label="Selected student"><option value="">Select a connected student</option></select><div class="chat-box dm-chat-box" id="dmChatBox"></div><div class="chat-input-row"><input type="text" id="dmChatInput" class="form-control" placeholder="Write a message..." /><button id="dmChatSendBtn" class="btn btn-primary btn-sm" type="button">Send</button></div></div></section></div>'
    +'<button id="portalStartQuizBtn" class="btn btn-success btn-block" type="button" style="margin-top:12px;">🚀 Take Quiz</button>';
   el('portalLogoutBtn').addEventListener('click',async function(){disconnectChat();await auth.logout();if(typeof window.showLanding==='function')window.showLanding();else showOnlyPortal();});
+  el('chatBackBtn').addEventListener('click',closeMobileChat);
+  initChatTheme();
+  el('chatThemeToggle').addEventListener('click',toggleChatTheme);
+  el('chatFab').addEventListener('click',openMobileChatHub);
+  el('mobileChatHubBack').addEventListener('click',closeMobileChatHub);
+  el('mobileChatListBack').addEventListener('click',openMobileChatHub);
+  el('mobileChatThemeToggle').addEventListener('click',toggleChatTheme);
+  document.querySelectorAll('[data-mobile-category]').forEach(function(button){button.addEventListener('click',function(){openMobileChatCategory(button.dataset.mobileCategory);});});
+  el('mobileChatSearch').addEventListener('input',function(){el('chatSearch').value=this.value;el('chatSearch').dispatchEvent(new Event('input'));});
+  document.querySelectorAll('[data-chat-view]').forEach(function(button){button.addEventListener('click',function(){if(button.dataset.chatView==='trainer')openTrainerChat();});});
   el('portalStartQuizBtn').addEventListener('click',function(){if(typeof window.showLanding==='function')window.showLanding();auth.prefillQuizForm();});
   setupStars();el('feedbackSubmitBtn').addEventListener('click',submitFeedback);el('postSubmitBtn').addEventListener('click',submitPost);el('chatSendBtn').addEventListener('click',sendChat);
   el('chatInput').addEventListener('keydown',function(e){if(e.key==='Enter')sendChat();});
   el('dmChatSendBtn').addEventListener('click',sendDirectMessage);
   el('dmChatInput').addEventListener('keydown',function(e){if(e.key==='Enter')sendDirectMessage();});
-  el('dmStudentSelect').addEventListener('change',function(){activeChatPeer=this.value||null;if(activeChatPeer&&socket)socket.emit('join:chat',activeChatPeer);loadDirectMessages();});
+  el('dmStudentSelect').addEventListener('change',function(){openStudentChat(this.value||null);});
+  el('chatSearch').addEventListener('input',function(){var query=this.value.trim().toLowerCase();document.querySelectorAll('.chat-conversation[data-search-name]').forEach(function(item){item.classList.toggle('hidden',query&&item.dataset.searchName.indexOf(query)<0);});});
+  setChatView('trainer');
   await loadAttempts();await loadPosts();await loadChatDirectory();await loadTrainerMessages();connectChat();
 }
 function setupStars(){
@@ -177,8 +241,8 @@ async function loadChatDirectory(){
   (requests.incoming||[]).concat(requests.outgoing||[]).forEach(function(item){if((item.status||'pending')==='accepted'){acceptedPeers.push(String(item.senderId===currentId?item.receiverId:item.senderId));}});
   select.innerHTML='<option value="">Select a student</option>' + students.filter(function(student){return acceptedPeers.indexOf(String(student._id))>=0;}).map(function(student){return '<option value="'+student._id+'">'+utils.escapeHtml(student.name||'')+'</option>';}).join('');
   if(connectedBox){
-    connectedBox.innerHTML=students.filter(function(student){return acceptedPeers.indexOf(String(student._id))>=0;}).map(function(student){var online=!!onlineStudentIds[String(student._id)];return '<button type="button" class="connected-student" data-connected-student="'+student._id+'"><span class="avatar">'+utils.escapeHtml((student.name||'?').slice(0,1).toUpperCase())+'</span><span class="connected-student__copy"><strong>'+utils.escapeHtml(student.name||'Student')+'</strong><small>'+ (online?'Online':'Offline') +'</small></span><span class="online-dot'+(online?' online-dot--active':'')+'" aria-label="'+(online?'Online':'Offline')+'"></span><span class="connected-student__action">Open chat</span></button>';}).join('')||'<p class="empty-state">Accept a request to start a student conversation.</p>';
-    connectedBox.querySelectorAll('[data-connected-student]').forEach(function(button){button.addEventListener('click',function(){activeChatPeer=button.dataset.connectedStudent;select.value=activeChatPeer;if(socket)socket.emit('join:chat',activeChatPeer);loadDirectMessages();});});
+    connectedBox.innerHTML=students.filter(function(student){return acceptedPeers.indexOf(String(student._id))>=0;}).map(function(student){var online=!!onlineStudentIds[String(student._id)];var name=student.name||'Student';var active=String(activeChatPeer)===String(student._id)?' is-active':'';return '<button type="button" class="connected-student chat-conversation chat-conversation--student'+active+'" data-connected-student="'+student._id+'" data-chat-view="student" data-search-name="'+utils.escapeHtml(name.toLowerCase())+'"><span class="avatar">'+utils.escapeHtml(name.slice(0,1).toUpperCase())+'</span><span class="connected-student__copy"><strong>'+utils.escapeHtml(name)+'</strong><small>Student connection · '+ (online?'Online':'Offline') +'</small></span><span class="online-dot'+(online?' online-dot--active':'')+'" aria-label="'+(online?'Online':'Offline')+'"></span><span class="connected-student__action">Open</span></button>';}).join('')||'<p class="empty-state">Accept a request to start a student conversation.</p>';
+    connectedBox.querySelectorAll('[data-connected-student]').forEach(function(button){button.addEventListener('click',function(){openStudentChat(button.dataset.connectedStudent);});});
   }
   if(activeChatPeer){
     select.value=String(activeChatPeer);
@@ -189,7 +253,7 @@ async function loadChatDirectory(){
     btn.addEventListener('click',async function(){
       var personId=btn.dataset.chatPerson;var action=btn.dataset.chatAction;
       if(action==='pending'){return;}
-      if(action==='open'){activeChatPeer=personId;if(socket)socket.emit('join:chat',personId);loadDirectMessages();if(select){select.value=String(personId);} return;}
+      if(action==='open'){openStudentChat(personId); return;}
       var r=await api.post('/api/chat/request',{receiverId:personId,note:'Hi! Can we chat?'});
       if(r.ok&&r.data&&r.data.success){await loadChatDirectory();}
     });
@@ -215,7 +279,7 @@ async function loadDirectMessages(){
   if(!messages.length){box.innerHTML='<p class="text-muted text-sm">No messages yet.</p>';return;}
   box.innerHTML=messages.map(function(m){
     var isMine = String(m.fromId) === String((auth.currentStudent&&auth.currentStudent._id) || '');
-    return '<div class="chat-msg"><span class="who">'+utils.escapeHtml(isMine?'You':(m.fromName||'Student'))+'</span> <span class="text">'+utils.escapeHtml(m.message||'')+'</span></div>';
+    return '<div class="chat-msg '+(isMine?'is-mine':'is-other')+'"><span class="who">'+utils.escapeHtml(isMine?'You':(m.fromName||'Student'))+'</span><span class="text">'+utils.escapeHtml(m.message||'')+'</span>'+(m.createdAt?'<time>'+utils.escapeHtml(new Date(m.createdAt).toLocaleTimeString([], {hour:'numeric',minute:'2-digit'}))+'</time>':'')+'</div>';
   }).join('');
   box.scrollTop=box.scrollHeight;
 }
@@ -226,7 +290,7 @@ async function loadTrainerMessages(){
   if(!r.ok||!r.data||!r.data.success){box.innerHTML='<p class="text-muted text-sm">Trainer chat is unavailable right now.</p>';return;}
   var messages=r.data.messages||[];
   if(!messages.length){box.innerHTML='<p class="text-muted text-sm">No trainer messages yet.</p>';return;}
-  box.innerHTML=messages.map(function(m){return '<div class="chat-msg"><span class="who">'+utils.escapeHtml(m.fromName||'Trainer')+':</span> <span class="text">'+utils.escapeHtml(m.message||'')+'</span></div>';}).join('');
+  box.innerHTML=messages.map(function(m){var isMine=String(m.fromId)===String((auth.currentStudent&&auth.currentStudent._id)||'');return '<div class="chat-msg '+(isMine?'is-mine':'is-other')+'"><span class="who">'+utils.escapeHtml(isMine?'You':(m.fromName||'Trainer'))+'</span><span class="text">'+utils.escapeHtml(m.message||'')+'</span>'+(m.createdAt?'<time>'+utils.escapeHtml(new Date(m.createdAt).toLocaleTimeString([], {hour:'numeric',minute:'2-digit'}))+'</time>':'')+'</div>';}).join('');
   box.scrollTop=box.scrollHeight;
 }
 async function sendDirectMessage(){
@@ -248,7 +312,7 @@ function connectChat(){
   socket.on('presence:snapshot',function(state){var status=el('trainerPresence');if(status)status.textContent=state.trainerOnline?'online':'offline';});
   socket.on('presence:update',function(state){if(state.role==='teacher'){var status=el('trainerPresence');if(status)status.textContent=state.online?'online':'offline';}else if(state.role==='student'){onlineStudentIds[String(state.userId)]=!!state.online;loadChatDirectory();}});
   socket.on('chat:message',function(m){
-    if(m.room==='trainer:general'){var box=el('chatBox');if(box){var d=document.createElement('div');d.className='chat-msg';d.innerHTML='<span class="who">'+utils.escapeHtml(m.from||'Trainer')+':</span> <span class="text">'+utils.escapeHtml(m.text||'')+'</span>';box.appendChild(d);box.scrollTop=box.scrollHeight;}}
+    if(m.room==='trainer:general'){var box=el('chatBox');if(box){var isMine=String(m.fromId)===String((auth.currentStudent&&auth.currentStudent._id)||'');var d=document.createElement('div');d.className='chat-msg '+(isMine?'is-mine':'is-other');d.innerHTML='<span class="who">'+utils.escapeHtml(isMine?'You':(m.from||'Trainer'))+'</span><span class="text">'+utils.escapeHtml(m.text||'')+'</span>';box.appendChild(d);box.scrollTop=box.scrollHeight;}}
     if(activeChatPeer && (String(m.fromId)===String(activeChatPeer) || String(m.toId)===String(activeChatPeer))){loadDirectMessages();}
   });
   socket.on('chat:error',function(m){var msg = m && m.message ? m.message : 'Chat failed'; if(el('dmChatInput')){el('dmChatInput').setAttribute('placeholder', msg);}}

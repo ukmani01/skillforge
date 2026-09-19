@@ -8,7 +8,7 @@
 <title>SkillForge — Learn. Practice. Assess.</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="/css/base.css" />
 <link rel="stylesheet" href="/css/portal.css" />
 <link rel="stylesheet" href="/css/home.css" />
@@ -97,42 +97,48 @@
           </div>
           <div class="hero-stats">
             <div class="hero-stat">
-              <div class="value" id="heroTotalStudents">—</div>
+              <div class="value" id="heroTotalStudents" data-stat-value="0">—</div>
               <div class="label">Students</div>
             </div>
             <div class="hero-stat">
-              <div class="value" id="heroAvgScore">—</div>
+              <div class="value" id="heroAvgScore" data-stat-value="0">—</div>
               <div class="label">Avg Score</div>
             </div>
             <div class="hero-stat">
-              <div class="value">80</div>
+              <div class="value" data-stat-value="80">80</div>
               <div class="label">Questions</div>
             </div>
           </div>
         </div>
 
-        <div class="hero-visual" aria-hidden="true">
+        <div class="hero-visual" aria-label="SkillForge product preview">
           <div class="hero-visual__card">
-            <div class="hero-visual__bar">
-              <span class="hero-visual__dot"></span><span class="hero-visual__dot"></span><span class="hero-visual__dot"></span>
+            <div class="hero-visual__bar"><span class="hero-visual__context">SKILLFORGE / LEARNING SPACE</span><span class="hero-visual__live"><i></i> Live progress</span></div>
+            <div class="hero-story is-active" data-story="0">
+              <span class="hero-story__eyebrow">Explore</span>
+              <strong>Find the next skill worth your time.</strong>
+              <p>Focused learning paths built around the topics students actually use.</p>
+              <div class="hero-story__signal"><span style="width:72%"></span></div><small>2 learning paths · 4 levels</small>
             </div>
-            <div class="hero-visual__body">
-              <div class="hero-visual__q">Which HTML element defines the main content of a document?</div>
-              <div class="hero-visual__opt"><span class="letter">A</span> &lt;section&gt;</div>
-              <div class="hero-visual__opt is-correct"><span class="letter">B</span> &lt;main&gt;</div>
-              <div class="hero-visual__opt"><span class="letter">C</span> &lt;body&gt;</div>
+            <div class="hero-story" data-story="1">
+              <span class="hero-story__eyebrow">Learn</span>
+              <strong>Practice with questions that get harder.</strong>
+              <p>Move from fundamentals to interview thinking at your own pace.</p>
+              <div class="hero-story__chips"><span>HTML</span><span>Node.js</span><span>APIs</span></div>
             </div>
-            <div class="hero-visual__foot">
-              <span class="text-xs text-muted">Question 7 of 20</span>
-              <span class="badge badge-primary">Level 2</span>
+            <div class="hero-story" data-story="2">
+              <span class="hero-story__eyebrow">Track progress</span>
+              <strong>See improvement, attempt by attempt.</strong>
+              <p>Scores, levels, and history stay together in one clear portal.</p>
+              <div class="hero-story__score"><span>82%</span><div><b>Strong progress</b><small>+14% this month</small></div></div>
             </div>
-          </div>
-          <div class="hero-visual__badge">
-            <div class="hero-visual__ring"><span>82%</span></div>
-            <div>
-              <div style="font-weight:700;font-size:.82rem;">Nice progress</div>
-              <div class="text-xs text-muted">Full Stack · Level 2</div>
+            <div class="hero-story" data-story="3">
+              <span class="hero-story__eyebrow">Community</span>
+              <strong>Ask, share, and keep moving.</strong>
+              <p>Connect with classmates and trainers when you need another perspective.</p>
+              <div class="hero-story__people"><span>MK</span><span>AR</span><span>+12</span><small>Learning together</small></div>
             </div>
+            <div class="hero-visual__foot"><span class="text-xs text-muted">Your learning space</span><div class="hero-story__dots"><i class="is-active"></i><i></i><i></i><i></i></div></div>
           </div>
         </div>
       </div>
@@ -469,6 +475,8 @@
     </div>
 
     <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+      <button class="btn btn-primary hidden" id="nextLevelBtn" type="button" onclick="goToNextLevel()">→ Next Level</button>
+      <button class="btn btn-secondary hidden" id="restartBtn" type="button" onclick="restartQuiz()">Try Again</button>
       <button class="btn btn-primary" type="button" onclick="openStudentPortal()">View My Portal</button>
       <button class="btn btn-secondary" type="button" onclick="showLanding()">Back to Home</button>
     </div>
@@ -747,8 +755,8 @@
           }
           var elTotal = document.getElementById('heroTotalStudents');
           var elAvg = document.getElementById('heroAvgScore');
-          if (elTotal) elTotal.textContent = totalStudents;
-          if (elAvg) elAvg.textContent = avg + '%';
+          if (elTotal) { elTotal.dataset.statValue = String(totalStudents); elTotal.dataset.animated = ''; window.requestAnimationFrame(function () { window.animateHeroStat(elTotal, totalStudents, ''); }); }
+          if (elAvg) { elAvg.dataset.statValue = String(avg); elAvg.dataset.animated = ''; window.requestAnimationFrame(function () { window.animateHeroStat(elAvg, avg, '%'); }); }
         }
       }).catch(function () { /* silent */ });
     }

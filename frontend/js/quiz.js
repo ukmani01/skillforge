@@ -13,6 +13,7 @@
   var state = {
     selectedYear: null,
     currentLevel: 1,
+    level1Percentage: null,
     currentQuestions: [],
     currentIndex: 0,
     answers: [],
@@ -53,6 +54,7 @@
     state.quizStarted = true;
     state.quizSubmitted = false;
     state.currentLevel = 1;
+    state.level1Percentage = null;
     state.currentIndex = 0;
     state.answers = [];
     state.error = null;
@@ -63,6 +65,7 @@
   async function loadLevelQuestions(year, level) {
     state.loading = true;
     state.error = null;
+    state.currentLevel = level;
 
     if (el('qText')) el('qText').textContent = 'Loading questions...';
     if (el('qOptions')) el('qOptions').innerHTML = '';
@@ -202,6 +205,7 @@
     }
 
     var serverResult = scoreRes.data;
+    if (state.currentLevel === 1) state.level1Percentage = serverResult.percentage;
     var perf = utils.getPerformanceLevel(serverResult.percentage);
     var subject = state.selectedYear === '2nd' ? 'HTML Fundamentals' : 'Full Stack Web Development';
 
@@ -254,9 +258,26 @@
 
     var perf = utils.getPerformanceLevel(result.percentage);
     if (el('resultLevel')) el('resultLevel').textContent = perf.label;
+    if (el('resultTitle')) {
+      el('resultTitle').textContent = state.currentLevel === 1 ? 'Level 1 Complete' : 'Assessment Complete';
+    }
+    if (el('nextLevelBtn')) {
+      el('nextLevelBtn').classList.toggle('hidden', state.currentLevel !== 1);
+    }
+    if (el('restartBtn')) {
+      el('restartBtn').classList.toggle('hidden', state.currentLevel !== 2);
+    }
   }
 
-  function retry() {
+  function goToNextLevel() {
+    if (!state.selectedYear || state.currentLevel !== 1) return;
+    state.quizSubmitted = false;
+    state.currentIndex = 0;
+    state.answers = [];
+    loadLevelQuestions(state.selectedYear, 2);
+  }
+
+  function restartQuiz() {
     if (!state.selectedYear) return;
     loader.clearCache();
     state.quizSubmitted = false;
@@ -265,11 +286,17 @@
     loadLevelQuestions(state.selectedYear, state.currentLevel);
   }
 
+  function retry() {
+    restartQuiz();
+  }
+
   // Expose for inline onclick handlers
   window.selectYear = selectYear;
   window.startQuiz = startQuiz;
   window.nextQuestion = nextQuestion;
   window.prevQuestion = prevQuestion;
   window.submitQuiz = submitQuiz;
+  window.goToNextLevel = goToNextLevel;
+  window.restartQuiz = restartQuiz;
   window.__retryQuiz = retry;
 })();
