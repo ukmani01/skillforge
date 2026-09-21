@@ -50,6 +50,7 @@ app.use('/api', require('./routes/feedback'));
 app.use('/api', require('./routes/posts'));
 app.use('/api', require('./routes/chat'));
 app.use('/api', require('./routes/quiz'));
+app.use('/api', require('./routes/questionBank'));
 
 // ---- API 404 ----
 app.use('/api', function (req, res) {

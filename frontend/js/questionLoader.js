@@ -12,8 +12,8 @@
 
   var cache = {};
 
-  function cacheKey(year, level) {
-    return String(year) + ':' + String(level);
+  function cacheKey(year, level, moduleKey) {
+    return String(year) + ':' + String(level) + ':' + String(moduleKey || '');
   }
 
   /**
@@ -22,8 +22,8 @@
    * @param {number} level - 1 | 2
    * @returns {Promise<{ok:boolean, questions:Array, error?:string, subject?:string}>}
    */
-  async function load(year, level) {
-    var key = cacheKey(year, level);
+  async function load(year, level, moduleKey) {
+    var key = cacheKey(year, level, moduleKey);
     if (cache[key]) {
       return cache[key];
     }
@@ -32,7 +32,8 @@
       var url = '/api/quiz/questions?year=' +
         encodeURIComponent(year) +
         '&level=' +
-        encodeURIComponent(level);
+        encodeURIComponent(level) +
+        (moduleKey ? '&moduleKey=' + encodeURIComponent(moduleKey) : '');
 
       var r = await api.get(url);
 
@@ -49,7 +50,8 @@
         questions: Array.isArray(r.data.questions) ? r.data.questions : [],
         subject: r.data.subject || '',
         year: r.data.year || year,
-        level: r.data.level || level
+        level: r.data.level || level,
+        moduleKey: r.data.moduleKey || year + '-core'
       };
 
       if (result.questions.length > 0) {

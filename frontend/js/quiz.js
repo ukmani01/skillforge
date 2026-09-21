@@ -12,6 +12,8 @@
 
   var state = {
     selectedYear: null,
+    moduleKey: null,
+    selectedModuleKey: null,
     currentLevel: 1,
     level1Percentage: null,
     currentQuestions: [],
@@ -31,9 +33,19 @@
 
   function selectYear(year) {
     state.selectedYear = year;
+    state.selectedModuleKey = null;
     if (el('year2nd')) el('year2nd').classList.toggle('selected', year === '2nd');
     if (el('year3rd')) el('year3rd').classList.toggle('selected', year === '3rd');
     if (el('yearError')) el('yearError').style.display = 'none';
+    var moduleSelect = el('quizModule');
+    if (moduleSelect) { moduleSelect.disabled = true; moduleSelect.innerHTML = '<option>Loading modules...</option>'; }
+    api.get('/api/quiz/modules?year=' + encodeURIComponent(year)).then(function (response) {
+      if (!moduleSelect) return;
+      var modules = response.ok && response.data && Array.isArray(response.data.modules) ? response.data.modules : [];
+      moduleSelect.innerHTML = modules.map(function (module) { return '<option value="' + utils.escapeHtml(module.moduleKey) + '">' + utils.escapeHtml(module.title || module.subject) + '</option>'; }).join('');
+      moduleSelect.disabled = !modules.length;
+      state.selectedModuleKey = modules.length ? modules[0].moduleKey : year + '-core';
+    });
   }
 
   function startQuiz() {
@@ -59,10 +71,12 @@
     state.answers = [];
     state.error = null;
 
-    loadLevelQuestions(state.selectedYear, 1);
+    var moduleSelect = el('quizModule');
+    state.selectedModuleKey = (moduleSelect && moduleSelect.value) || state.selectedModuleKey || state.selectedYear + '-core';
+    loadLevelQuestions(state.selectedYear, 1, state.selectedModuleKey);
   }
 
-  async function loadLevelQuestions(year, level) {
+  async function loadLevelQuestions(year, level, moduleKey) {
     state.loading = true;
     state.error = null;
     state.currentLevel = level;
@@ -77,7 +91,7 @@
     utils.hideAll(['landing', 'quizResult', 'dashboard', 'dashboardLogin', 'studentPortal']);
     utils.show('quizActive');
 
-    var result = await loader.load(year, level);
+    var result = await loader.load(year, level, moduleKey);
 
     if (!result.ok || result.questions.length === 0) {
       state.loading = false;
@@ -95,6 +109,7 @@
 
     state.currentLevel = level;
     state.currentQuestions = utils.shuffle(result.questions.slice());
+    state.moduleKey = result.moduleKey || year + '-core';
     state.answers = new Array(state.currentQuestions.length).fill(null);
     state.currentIndex = 0;
     state.loading = false;
@@ -192,6 +207,8 @@
     var scoreRes = await api.post('/api/quiz/submit', {
       year: state.selectedYear,
       level: state.currentLevel,
+      moduleKey: state.moduleKey,
+      studentEmail: state.studentEmail,
       answers: answers
     });
 
@@ -214,6 +231,7 @@
       studentName: state.studentName,
       studentEmail: state.studentEmail,
       year: state.selectedYear,
+      moduleKey: state.moduleKey,
       subject: subject,
       score: serverResult.score,
       totalQuestions: serverResult.totalQuestions,
@@ -258,11 +276,12 @@
 
     var perf = utils.getPerformanceLevel(result.percentage);
     if (el('resultLevel')) el('resultLevel').textContent = perf.label;
+    if (el('resultReview')) el('resultReview').innerHTML = buildWrongAnswerReview(serverResult.questionResults || [], state.currentQuestions);
     if (el('resultTitle')) {
       el('resultTitle').textContent = state.currentLevel === 1 ? 'Level 1 Complete' : 'Assessment Complete';
     }
     if (el('nextLevelBtn')) {
-      el('nextLevelBtn').classList.toggle('hidden', state.currentLevel !== 1);
+      el('nextLevelBtn').classList.toggle('hidden', state.currentLevel !== 1 || result.percentage < 30);
     }
     if (el('restartBtn')) {
       el('restartBtn').classList.toggle('hidden', state.currentLevel !== 2);
@@ -271,10 +290,18 @@
 
   function goToNextLevel() {
     if (!state.selectedYear || state.currentLevel !== 1) return;
+    if (!window.studentAuth || !window.studentAuth.isAuthenticated) {
+      alert('Log in as a student before unlocking Level 2.');
+      return;
+    }
+    if (Number(state.level1Percentage) < 30) {
+      alert('You need at least 30% correct to unlock Level 2.');
+      return;
+    }
     state.quizSubmitted = false;
     state.currentIndex = 0;
     state.answers = [];
-    loadLevelQuestions(state.selectedYear, 2);
+    loadLevelQuestions(state.selectedYear, 2, state.moduleKey);
   }
 
   function restartQuiz() {
@@ -290,6 +317,24 @@
     restartQuiz();
   }
 
+  function buildWrongAnswerReview(results, questions) {
+    var wrong = results.filter(function (item) { return !item.isCorrect; });
+    if (!wrong.length) return '<h3>Wrong answer review</h3><p class="text-success">Excellent work. Every answer was correct.</p>';
+    var byId = {};
+    (questions || []).forEach(function (q) { byId[String(q.id)] = q; });
+    var html = '<h3>Wrong answer review</h3><div class="review-list">';
+    wrong.forEach(function (item, index) {
+      var q = byId[String(item.questionId)] || {};
+      var options = q.options || [];
+      var selected = item.selectedOption === null || item.selectedOption === undefined ? 'Not answered' : (options[item.selectedOption] || 'Unknown answer');
+      var correct = options[item.correctOption] || 'Unknown answer';
+      html += '<article class="review-item"><strong>' + (index + 1) + '. ' + utils.escapeHtml(item.question || q.question || '') + '</strong>'
+        + '<p class="text-danger"><b>Your answer:</b> ' + utils.escapeHtml(selected) + '</p>'
+        + '<p class="text-success"><b>Correct answer:</b> ' + utils.escapeHtml(correct) + '</p></article>';
+    });
+    return html + '</div>';
+  }
+
   // Expose for inline onclick handlers
   window.selectYear = selectYear;
   window.startQuiz = startQuiz;
@@ -299,4 +344,8 @@
   window.goToNextLevel = goToNextLevel;
   window.restartQuiz = restartQuiz;
   window.__retryQuiz = retry;
+  document.addEventListener('DOMContentLoaded', function () {
+    var moduleSelect = el('quizModule');
+    if (moduleSelect) moduleSelect.addEventListener('change', function () { state.selectedModuleKey = moduleSelect.value; });
+  });
 })();

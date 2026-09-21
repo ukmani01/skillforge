@@ -3,6 +3,9 @@
 const express = require('express');
 const router = express.Router();
 const Attempt = require('../models/attempt');
+const Progress = require('../models/progress');
+const QuizModule = require('../models/quizModule');
+const Student = require('../models/student');
 
 router.post('/attempts', async function (req, res) {
   try {
@@ -19,6 +22,9 @@ router.post('/attempts', async function (req, res) {
     }
 
     const email = String(data.studentEmail).trim().toLowerCase();
+    if (req.session && req.session.studentId && String(req.session.studentEmail).toLowerCase() !== email) {
+      return res.status(403).json({ success: false, error: 'Attempt email does not match the authenticated student.' });
+    }
     const prev = await Attempt.find({ studentEmail: email, year: data.year });
     const attemptNumber = prev.length + 1;
 
@@ -26,6 +32,8 @@ router.post('/attempts', async function (req, res) {
       studentName: String(data.studentName).trim(),
       studentEmail: email,
       year: data.year,
+      moduleKey: data.moduleKey || data.year + '-core',
+      subject: data.subject || '',
       score: data.score,
       totalQuestions: data.totalQuestions,
       percentage: data.percentage,
@@ -46,6 +54,19 @@ router.post('/attempts', async function (req, res) {
     });
 
     await attempt.save();
+
+    if (req.session && req.session.studentId && Number(data.currentLevel) === 1) {
+      const moduleKey = data.moduleKey || data.year + '-core';
+      const module = await QuizModule.findOne({ moduleKey }).lean();
+      const passingPercentage = module ? module.passingPercentage : 30;
+      if (Number(data.percentage) >= passingPercentage) {
+        await Progress.findOneAndUpdate(
+          { studentId: req.session.studentId, moduleKey: moduleKey },
+          { $set: { studentEmail: email, currentLevel: 2, updatedAt: new Date() }, $addToSet: { passedLevels: 1 } },
+          { upsert: true, new: true }
+        );
+      }
+    }
 
     const prevBest = prev.length > 0
       ? Math.max.apply(null, prev.map(function (a) { return a.percentage; }))

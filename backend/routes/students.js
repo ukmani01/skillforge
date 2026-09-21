@@ -6,6 +6,7 @@ const router = express.Router();
 const Student = require('../models/student');
 const Attempt = require('../models/attempt');
 const studentAuth = require('../middleware/studentAuth');
+const Progress = require('../models/progress');
 
 function validEmail(e) {
   return typeof e === 'string' && /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(e);
@@ -150,6 +151,15 @@ router.get('/students/me/attempts', studentAuth, async function (req, res) {
     res.json({ success: true, attempts: attempts });
   } catch (error) {
     res.status(500).json({ success: false, error: 'Failed to fetch attempts.' });
+  }
+});
+
+router.get('/students/me/progress', studentAuth, async function (req, res) {
+  try {
+    const progress = await Progress.find({ studentId: req.student._id }).sort({ moduleKey: 1 }).lean();
+    res.json({ success: true, progress: progress });
+  } catch (error) {
+    res.status(500).json({ success: false, error: 'Failed to fetch progress.' });
   }
 });
 

@@ -63,9 +63,9 @@ function closeMobileChat(){var workspace=el('chatWorkspace');if(workspace)worksp
 function toggleChatTheme(){document.documentElement.classList.toggle('chat-dark');localStorage.setItem('skillforge-chat-theme',document.documentElement.classList.contains('chat-dark')?'dark':'light');}
 function initChatTheme(){if(localStorage.getItem('skillforge-chat-theme')==='dark')document.documentElement.classList.add('chat-dark');}
 function showOnlyPortal(){
-  utils.hideAll(['landing','quizActive','quizResult','dashboardLogin','dashboard']);
+  utils.hideAll(['homeView','landing','quizActive','quizResult','dashboardLogin','dashboard']);
   utils.show('studentPortal');
-  window.scrollTo({top:0,behavior:'smooth'});
+  if(typeof window.scrollToView==='function')window.scrollToView('studentPortal');
 }
 async function openPortal(){
   showOnlyPortal();

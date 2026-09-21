@@ -404,6 +404,11 @@
       </div>
     </div>
 
+    <div class="form-group" style="margin-top:16px;">
+      <label for="quizModule">Learning module</label>
+      <select id="quizModule" class="form-control" disabled><option>Choose a year first</option></select>
+    </div>
+
     <div id="yearError" class="text-sm" style="color:var(--danger);margin-top:10px;display:none;">
       Please select your year.
     </div>
@@ -481,6 +486,7 @@
       <button class="btn btn-primary" type="button" onclick="openStudentPortal()">View My Portal</button>
       <button class="btn btn-secondary" type="button" onclick="showLanding()">Back to Home</button>
     </div>
+    <div id="resultReview" class="portal-card hidden" style="text-align:left;margin-top:20px;"></div>
   </section>
 
   <!-- ==========================================================
@@ -536,6 +542,7 @@
       <button class="dash-tab" type="button" role="tab" onclick="switchDashTab('messages', this)">Messages</button>
       <button class="dash-tab" type="button" role="tab" onclick="switchDashTab('announcements', this)">Announcements</button>
       <button class="dash-tab" type="button" role="tab" onclick="switchDashTab('community', this)">Community &amp; feedback</button>
+      <button class="dash-tab" type="button" role="tab" onclick="switchDashTab('questionBank', this);loadQuestionBank()">Question bank</button>
     </div>
 
     <!-- STUDENTS -->
@@ -603,6 +610,29 @@
           <div id="adminPostsList"></div>
         </div>
       </div>
+    </div>
+
+    <!-- QUESTION BANK -->
+    <div class="dash-panel hidden" id="dashPanel-questionBank">
+      <div class="card" style="margin-bottom:16px;">
+        <h3>Upload quiz JSON</h3>
+        <p class="text-muted text-sm">Upload a year JSON file or a module with moduleKey and title.</p>
+        <textarea id="questionJsonInput" class="form-control" rows="8" placeholder='{"moduleKey":"html-core","title":"HTML Fundamentals","year":"2nd","subject":"HTML Fundamentals","questions":[...]}'></textarea>
+        <div class="portal-actions" style="margin-top:10px;"><button class="btn btn-primary btn-sm" type="button" onclick="uploadQuestionJson()">Upload module</button><span id="questionBankMessage" class="text-sm"></span></div>
+      </div>
+      <div class="card" style="margin-bottom:16px;">
+        <h3>Add question manually</h3>
+        <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;">
+          <input id="newQuestionModule" class="form-control" placeholder="Module key" />
+          <input id="newQuestionId" class="form-control" placeholder="Question ID" />
+          <input id="newQuestionText" class="form-control" placeholder="Question" />
+          <input id="newQuestionOptions" class="form-control" placeholder="Options separated by |" />
+          <input id="newQuestionCorrect" class="form-control" type="number" min="0" placeholder="Correct option index" />
+          <select id="newQuestionLevel" class="form-control"><option value="1">Level 1</option><option value="2">Level 2</option></select>
+        </div>
+        <button class="btn btn-secondary btn-sm" type="button" style="margin-top:10px;" onclick="addQuestion()">Add question</button>
+      </div>
+      <div id="questionBankList"></div>
     </div>
   </section>
 
@@ -685,8 +715,18 @@
     hideAllViews();
     var el = document.getElementById(id);
     if (el) el.classList.remove('hidden');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    scrollToView(id);
   }
+
+  function scrollToView(id) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    window.requestAnimationFrame(function () {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
+
+  window.scrollToView = scrollToView;
 
   window.goHome = function () {
     if (window.toggleMobileNav) window.toggleMobileNav(false);

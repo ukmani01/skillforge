@@ -122,6 +122,7 @@
 
 .filter-btn{background:var(--surface);color:var(--text-secondary);border:1.5px solid var(--border)}
 .filter-btn.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+.review-list{display:grid;gap:10px;margin-top:12px}.review-item{padding:14px;border:1px solid var(--border);border-left:3px solid var(--danger);border-radius:var(--radius-sm);background:var(--surface-alt)}.review-item p{margin:8px 0 0;font-size:.84rem}
 
 /* ---- Responsive ---- */
 @media(max-width:640px){
