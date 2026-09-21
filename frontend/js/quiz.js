@@ -251,11 +251,14 @@
       currentLevel: state.currentLevel
     };
 
-    var saveRes = await api.post('/api/attempts', attemptPayload);
-    var previousBest = (saveRes.ok && saveRes.data && saveRes.data.previousBest) || 0;
-
     state.quizSubmitted = true;
-    showResult(attemptPayload, previousBest, serverResult);
+    showResult(attemptPayload, 0, serverResult);
+
+    // Persist the completed attempt after the score and review are visible.
+    var saveRes = await api.post('/api/attempts', attemptPayload);
+    if (saveRes.ok && saveRes.data && saveRes.data.previousBest && el('resultPrevBest')) {
+      el('resultPrevBest').textContent = saveRes.data.previousBest + '%';
+    }
   }
 
   function showResult(result, previousBest, serverResult) {
@@ -276,7 +279,10 @@
 
     var perf = utils.getPerformanceLevel(result.percentage);
     if (el('resultLevel')) el('resultLevel').textContent = perf.label;
-    if (el('resultReview')) el('resultReview').innerHTML = buildWrongAnswerReview(serverResult.questionResults || [], state.currentQuestions);
+    if (el('resultReview')) {
+      el('resultReview').innerHTML = buildWrongAnswerReview(serverResult.questionResults || [], state.currentQuestions);
+      el('resultReview').classList.remove('hidden');
+    }
     if (el('resultTitle')) {
       el('resultTitle').textContent = state.currentLevel === 1 ? 'Level 1 Complete' : 'Assessment Complete';
     }
@@ -310,7 +316,7 @@
     state.quizSubmitted = false;
     state.currentIndex = 0;
     state.answers = [];
-    loadLevelQuestions(state.selectedYear, state.currentLevel);
+    loadLevelQuestions(state.selectedYear, state.currentLevel, state.moduleKey);
   }
 
   function retry() {
